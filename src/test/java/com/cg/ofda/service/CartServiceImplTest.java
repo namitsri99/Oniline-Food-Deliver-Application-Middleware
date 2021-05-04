@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cg.ofda.entity.CustomerEntity;
 import com.cg.ofda.entity.FoodCartEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CartException;
 import com.cg.ofda.model.AddressModel;
 import com.cg.ofda.model.CustomerModel;
 import com.cg.ofda.model.FoodCartModel;
@@ -26,6 +26,7 @@ import com.cg.ofda.repository.ICartRepository;
 @ExtendWith(MockitoExtension.class)
 public class CartServiceImplTest {
 
+	/* Mocking the Repository */
 	@Mock
 	private ICartRepository cartRepo;
 
@@ -34,39 +35,40 @@ public class CartServiceImplTest {
 					 * implementation
 					 */
 	private CartServiceImpl csImpl;
-	
+
 	/*
 	 * For Viewing all the carts
-	 * */
-	
+	 */
+
 	@Test
 	@DisplayName("CartServiceImpl : viewAllCarts for viewing all the carts")
-	public void testViewAllCarts() throws OFDAException{
-		
-		List<FoodCartEntity> testData= Arrays.asList(new FoodCartEntity[] {
-				
+	public void testViewAllCarts() throws CartException {
+
+		List<FoodCartEntity> testData = Arrays.asList(new FoodCartEntity[] {
+
 				new FoodCartEntity(101L,
-						new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com")),
-				new FoodCartEntity(102L,
-						new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"))
-				
+						new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
+								"arpit@gmail.com")),
+				new FoodCartEntity(102L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
+						"arpit@gmail.com"))
+
 		});
-		
+
 		Mockito.when(cartRepo.findAll()).thenReturn(testData);
 
-		List<FoodCartModel> expected= Arrays.asList(new FoodCartModel[] {
+		List<FoodCartModel> expected = Arrays.asList(new FoodCartModel[] {
 				new FoodCartModel(101L,
-						new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com")),
-				new FoodCartModel(102L,
-						new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"))
-				
+						new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
+								"arpit@gmail.com")),
+				new FoodCartModel(102L, new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
+						"arpit@gmail.com"))
+
 		});
-		
+
 		List<FoodCartModel> actual = csImpl.viewAllCarts();
 		assertEquals(expected, actual);
-		
+
 	}
-	
 
 	/*
 	 * For Adding the item in cart
@@ -77,7 +79,7 @@ public class CartServiceImplTest {
 
 	@Test
 	@DisplayName("CartServiceImpl::addCart should return added cart")
-	void testAddCart() throws OFDAException {
+	void testAddCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		FoodCartModel expected = new FoodCartModel(101L,
@@ -94,36 +96,17 @@ public class CartServiceImplTest {
 
 	@Test
 	@DisplayName("CartServceImpl::updateCart should return updated Cart ")
-	void testUpdateCart() throws OFDAException {
+	void testUpdateCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		FoodCartModel expected = new FoodCartModel(101L,
-				new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
-
+				new CustomerModel(1L, "Shubham", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
+		
 		Mockito.when(cartRepo.findById(testData.getCartId())).thenReturn(Optional.of(testData));
 		FoodCartModel actual = csImpl.updateCart(expected);
 		assertEquals(expected, actual);
 
 	}
-
-//	/*
-//	 * For Updating the quantity in item
-//	 * */
-//	
-//	
-//	@Test
-//	@DisplayName("CartServceImpl::reduceQuantity should return updated bills with reduced quantity")
-//	void testReduceQuantity() throws OFDAException {
-//		FoodCartEntity testData = new FoodCartEntity(101L,new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210",
-//				address, "arpit@gmail.com"));
-//		FoodCartModel expected= new FoodCartModel(101L,new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210",
-//				address, "arpit@gmail.com"));
-//
-//		Mockito.when(cartRepo.findById(testData.getCartId())).thenReturn(Optional.of(testData));
-//		FoodCartModel actual = csImpl.reduceQuantity(expected, new ItemModel(), 200);
-//		assertEquals(expected, actual);
-//
-//	}
 
 	/*
 	 * For removing the cart
@@ -131,7 +114,7 @@ public class CartServiceImplTest {
 
 	@Test
 	@DisplayName("CartServiceImpl::removeCart should return removed Cart")
-	void testRemoveCart() throws OFDAException {
+	void testRemoveCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		FoodCartModel expected = new FoodCartModel(101L,
@@ -149,7 +132,7 @@ public class CartServiceImplTest {
 
 	@Test
 	@DisplayName("CartServiceImpl::clearCart should return a clear cart ")
-	void testClearCart() throws OFDAException {
+	void testClearCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		FoodCartModel expected = new FoodCartModel(101L,
@@ -164,8 +147,8 @@ public class CartServiceImplTest {
 	 * For viewing the carts
 	 */
 	@Test
-	@DisplayName("CartServiceImpl::viewCart should return a clear cart ")
-	void testViewCart() throws OFDAException {
+	@DisplayName("CartServiceImpl::viewCart should return an existing cart ")
+	void testViewCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		FoodCartModel expected = new FoodCartModel(101L,

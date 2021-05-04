@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.OrderDetailsEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.OrderException;
 import com.cg.ofda.model.OrderDetailsModel;
 import com.cg.ofda.repository.IOrderRepository;
 import com.cg.ofda.util.EMParserOrderDetails;
@@ -43,10 +43,10 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Transactional
 	@Override
-	public OrderDetailsModel addOrder(OrderDetailsModel order) throws OFDAException {
+	public OrderDetailsModel addOrder(OrderDetailsModel order) throws OrderException {
 		if (order != null) {
 			if (orderRepository.existsById(order.getOrderId())) {
-				throw new OFDAException("Order with this id already exists");
+				throw new OrderException("Order with this id already exists");
 			}
 
 			order = parser.parse(orderRepository.save(parser.parse(order)));
@@ -61,10 +61,10 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Transactional
 	@Override
-	public OrderDetailsModel updateOrder(OrderDetailsModel order) throws OFDAException {
+	public OrderDetailsModel updateOrder(OrderDetailsModel order) throws OrderException {
 		OrderDetailsEntity oldOrder = orderRepository.findById(order.getOrderId()).orElse(null);
 		if (oldOrder == null) {
-			throw new OFDAException("no order with id #" + order.getOrderId() + " present");
+			throw new OrderException("no order with id #" + order.getOrderId() + " present");
 		} else {
 			order = parser.parse(orderRepository.save(parser.parse(order)));
 		}
@@ -77,11 +77,11 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Transactional
 	@Override
-	public boolean removeOrder(Long orderId) throws OFDAException {
+	public boolean removeOrder(Long orderId) throws OrderException {
 		boolean isDeleted = false;
 		OrderDetailsEntity oldOrder = orderRepository.findById(orderId).orElse(null);
 		if (oldOrder == null) {
-			throw new OFDAException("no order with id #" + orderId + " present");
+			throw new OrderException("no order with id #" + orderId + " present");
 		} else {
 			orderRepository.deleteById(orderId);
 			isDeleted = true;
@@ -94,10 +94,10 @@ public class OrderServiceImpl implements IOrderService {
 	 */
 
 	@Override
-	public OrderDetailsModel viewOrder(Long orderId) throws OFDAException {
+	public OrderDetailsModel viewOrder(Long orderId) throws OrderException {
 		OrderDetailsEntity oldOrder = orderRepository.findById(orderId).orElse(null);
 		if (oldOrder == null) {
-			throw new OFDAException("no order with id #" + orderId + " present");
+			throw new OrderException("no order with id #" + orderId + " present");
 		}
 		return parser.parse(orderRepository.findById(orderId).orElse(null));
 	}
@@ -107,7 +107,7 @@ public class OrderServiceImpl implements IOrderService {
 	 */
 
 	@Override
-	public List<OrderDetailsModel> viewAllOrders() throws OFDAException {
+	public List<OrderDetailsModel> viewAllOrders() throws OrderException {
 
 		return orderRepository.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

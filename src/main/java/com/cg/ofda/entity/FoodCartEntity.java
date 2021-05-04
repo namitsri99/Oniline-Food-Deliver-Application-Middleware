@@ -1,4 +1,4 @@
-package com.cg.ofda.entity;
+	package com.cg.ofda.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -154,8 +154,7 @@ public class FoodCartEntity implements Serializable{
 	
 	@Override
 	public String toString() {
-		return String.format("FoodCartEntity [cartId=%s, customer=%s, itemList=%s, orderDetails=%s]", cartId, customer,
-				itemList, orderDetails);
+		return String.format("cartId=%s, customer=%s, ", cartId, customer);
 	}
 
 	

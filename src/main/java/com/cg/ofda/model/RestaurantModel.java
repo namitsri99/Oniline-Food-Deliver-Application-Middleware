@@ -9,6 +9,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class RestaurantModel {
+	
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message = "restaurant id cannot be null")
 	private Long restaurantId;
 

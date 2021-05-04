@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.cg.ofda.entity.CustomerEntity;
 import com.cg.ofda.entity.FoodCartEntity;
 import com.cg.ofda.entity.OrderDetailsEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.OrderException;
 import com.cg.ofda.model.AddressModel;
 import com.cg.ofda.model.CustomerModel;
 import com.cg.ofda.model.FoodCartModel;
@@ -31,13 +31,14 @@ import com.cg.ofda.repository.IOrderRepository;
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceImplTest {
 
+	/* Mocking the Repository */
 	@Mock
 	private IOrderRepository orderRepo;
 
-	 /*
-					 * injecting package repository marked as @Mock into package service
-					 * implementation
-					 */
+	/*
+	 * injecting package repository marked as @Mock into package service
+	 * implementation
+	 */
 	@InjectMocks
 	private OrderServiceImpl osImpl;
 
@@ -45,11 +46,11 @@ public class OrderServiceImplTest {
 			"281004");
 
 	/*
-	 * For Getting all the orders of a customer
+	 * For Getting all the orders
 	 */
 	@Test
-	@DisplayName("OrderServiceImpl::getAllCustomer should return list of existing orders of a customer")
-	void testGetAllCustomer() throws OFDAException {
+	@DisplayName("OrderServiceImpl::getAllOrder should return list of existing orders")
+	void testGetAllOrders() throws OrderException {
 
 		List<OrderDetailsEntity> testdata = Arrays.asList(new OrderDetailsEntity[] {
 				new OrderDetailsEntity(1000L, LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
@@ -82,12 +83,12 @@ public class OrderServiceImplTest {
 	}
 
 	/*
-	 * For Adding the customer
+	 * For Adding the order
 	 */
 
 	@Test
 	@DisplayName("OrderServiceImpl::addOrder should return added order")
-	void testAddOrder() throws OFDAException {
+	void testAddOrder() throws OrderException {
 		OrderDetailsEntity testData = new OrderDetailsEntity(1001L,
 				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 				new FoodCartEntity(101L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
@@ -110,7 +111,7 @@ public class OrderServiceImplTest {
 
 	@Test
 	@DisplayName("OrderServiceImpl::updateOrder should return updated order")
-	void testUpdateOrder() throws OFDAException {
+	void testUpdateOrder() throws OrderException {
 		OrderDetailsEntity testData = new OrderDetailsEntity(1001L,
 				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 				new FoodCartEntity(101L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
@@ -134,7 +135,7 @@ public class OrderServiceImplTest {
 
 	@Test
 	@DisplayName("OrderServiceImpl::removeOrder should return the removed Order")
-	void testRemoveOrder() throws OFDAException {
+	void testRemoveOrder() throws OrderException {
 		OrderDetailsEntity testData = new OrderDetailsEntity(1001L,
 				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 				new FoodCartEntity(101L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
@@ -158,7 +159,7 @@ public class OrderServiceImplTest {
 
 	@Test
 	@DisplayName("OrderServiceImpl::viewOrder should return an existing order ")
-	void testViewOrder() throws OFDAException {
+	void testViewOrder() throws OrderException {
 		OrderDetailsEntity testData = new OrderDetailsEntity(1001L,
 				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 				new FoodCartEntity(101L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,

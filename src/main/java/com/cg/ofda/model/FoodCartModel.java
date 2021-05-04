@@ -8,6 +8,10 @@ import javax.validation.constraints.NotNull;
 
 public class FoodCartModel {
 
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message = "Food cart id cannot be null")
 	private Long cartId;
 
@@ -121,6 +125,7 @@ public class FoodCartModel {
 		return true;
 	}
 
+	
 	/*
 	 * toString() method overridden here
 	 * 
@@ -128,8 +133,9 @@ public class FoodCartModel {
 
 	@Override
 	public String toString() {
-		return "FoodCartModel [cartId=" + cartId + ", customer=" + customer + ", itemList=" + itemList
-				+ ", orderDetails=" + orderDetails + "]";
+		return String.format("cartId=%s, customer=%s", cartId, customer);
 	}
+
+	
 
 }

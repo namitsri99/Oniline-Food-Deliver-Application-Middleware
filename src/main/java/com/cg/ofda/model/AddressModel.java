@@ -9,7 +9,10 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class AddressModel {
 	
-
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotEmpty(message="building name cannot be empty")
 	@NotNull(message="building name cannot be omitted")
 	private String buildingName;

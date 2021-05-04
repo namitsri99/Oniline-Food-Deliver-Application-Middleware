@@ -16,13 +16,14 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cg.ofda.entity.CategoryEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CategoryException;
 import com.cg.ofda.model.CategoryModel;
 import com.cg.ofda.repository.ICategoryRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceImplTest {
 
+	/* Mocking the Repository */
 	@Mock
 	private ICategoryRepository catRepo;
 
@@ -33,34 +34,33 @@ public class CategoryServiceImplTest {
 
 	@InjectMocks
 	private CategoryServiceImpl csImpl;
-	
+
 	/*
 	 * For Viewing all the category
-	 * */
-	
+	 */
+
 	@Test
 	@DisplayName("CategoryServiceImpl : viewAllCategory for viewing all the category")
-	public void testViewAllCategory() throws OFDAException{
-		
-		List<CategoryEntity> testData= Arrays.asList(new CategoryEntity[] {
-				
-				new CategoryEntity(100L, "fries"),new CategoryEntity(101L, "Burger")
-				
+	public void testViewAllCategory() throws CategoryException {
+
+		List<CategoryEntity> testData = Arrays.asList(new CategoryEntity[] {
+
+				new CategoryEntity(100L, "fries"), new CategoryEntity(101L, "Burger")
+
 		});
-		
+
 		Mockito.when(catRepo.findAll()).thenReturn(testData);
 
-		List<CategoryModel> expected= Arrays.asList(new CategoryModel[] {
-				
-				new CategoryModel(100L, "fries"),new CategoryModel(101L, "Burger")
-				
+		List<CategoryModel> expected = Arrays.asList(new CategoryModel[] {
+
+				new CategoryModel(100L, "fries"), new CategoryModel(101L, "Burger")
+
 		});
-		
+
 		List<CategoryModel> actual = csImpl.viewAllCategory();
 		assertEquals(expected, actual);
-		
+
 	}
-	
 
 	/*
 	 * For Adding the category
@@ -68,7 +68,7 @@ public class CategoryServiceImplTest {
 
 	@Test
 	@DisplayName("CategoryServiceImpl::addCategory should return added category")
-	void testAddCategory() throws OFDAException {
+	void testAddCategory() throws CategoryException {
 		CategoryEntity testData = new CategoryEntity(100L, "fries");
 		CategoryModel expected = new CategoryModel(100L, "fries");
 
@@ -83,7 +83,7 @@ public class CategoryServiceImplTest {
 
 	@Test
 	@DisplayName("CategoryServiceImpl::updateCategory should return updated category")
-	void testUpdateCategory() throws OFDAException {
+	void testUpdateCategory() throws CategoryException {
 		CategoryEntity testData = new CategoryEntity(100L, "fries");
 		CategoryModel expected = new CategoryModel(100L, "fries");
 
@@ -99,7 +99,7 @@ public class CategoryServiceImplTest {
 
 	@Test
 	@DisplayName("CategoryServiceImpl::testRemoveCategory should return the removed category")
-	void testRemoveCategory() throws OFDAException {
+	void testRemoveCategory() throws CategoryException {
 		CategoryEntity testData = new CategoryEntity(100L, "fries");
 		CategoryModel expected = new CategoryModel(100L, "fries");
 
@@ -115,7 +115,7 @@ public class CategoryServiceImplTest {
 
 	@Test
 	@DisplayName("CategoryServiceImpl::viewCategory should return existing category")
-	void testViewCategory() throws OFDAException {
+	void testViewCategory() throws CategoryException {
 		CategoryEntity testData = new CategoryEntity(100L, "fries");
 		CategoryModel expected = new CategoryModel(100L, "fries");
 

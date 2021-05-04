@@ -14,8 +14,9 @@ public class BillModel{
 	 
 
 	/*
-	 * Private Members Validation
-	 * */
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message="bill id cannot be null")
     private Long billId;
 	

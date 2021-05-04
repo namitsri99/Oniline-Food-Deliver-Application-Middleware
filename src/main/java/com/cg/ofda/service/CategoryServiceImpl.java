@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.CategoryEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CategoryException;
 import com.cg.ofda.model.CategoryModel;
 import com.cg.ofda.repository.ICategoryRepository;
 import com.cg.ofda.util.EMParserCategory;
@@ -43,10 +43,10 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Transactional
 	@Override
-	public CategoryModel addCategory(CategoryModel cat) throws OFDAException {
+	public CategoryModel addCategory(CategoryModel cat) throws CategoryException {
 		if (cat != null) {
 			if (categoryRepository.existsById(cat.getCatId())) {
-				throw new OFDAException("Category with this id already exists");
+				throw new CategoryException("Category with this id already exists");
 			}
 
 			cat = parser.parse(categoryRepository.save(parser.parse(cat)));
@@ -61,10 +61,10 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Transactional
 	@Override
-	public CategoryModel updateCategory(CategoryModel cat) throws OFDAException {
+	public CategoryModel updateCategory(CategoryModel cat) throws CategoryException {
 		CategoryEntity category= categoryRepository.findById(cat.getCatId()).orElse(null);
 		if(category== null)
-			throw new OFDAException("no category with id #" + cat.getCatId() + " present");
+			throw new CategoryException("no category with id #" + cat.getCatId() + " present");
 		cat = parser.parse(categoryRepository.save(parser.parse(cat)));
 		return cat;
 	}
@@ -75,11 +75,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Transactional
 	@Override
-	public boolean removeCategory(Long catId) throws OFDAException {
+	public boolean removeCategory(Long catId) throws CategoryException {
 		CategoryEntity oldEntity = categoryRepository.findById(catId).orElse(null);
 		boolean isDeleted = false;
 		if (oldEntity == null) {
-			throw new OFDAException("no category with id #" + catId + " present");
+			throw new CategoryException("no category with id #" + catId + " present");
 		} else {
 			categoryRepository.deleteById(catId);
 			isDeleted = true;
@@ -92,10 +92,10 @@ public class CategoryServiceImpl implements ICategoryService {
 	 */
 
 	@Override
-	public CategoryModel viewCategory(Long catId) throws OFDAException {
+	public CategoryModel viewCategory(Long catId) throws CategoryException {
 		CategoryEntity oldCategory = categoryRepository.findById(catId).orElse(null);
 		if (oldCategory == null) {
-			throw new OFDAException("no category with id #" + catId + " present");
+			throw new CategoryException("no category with id #" + catId + " present");
 		}
 		return parser.parse(categoryRepository.findById(catId).orElse(null));
 	}
@@ -105,7 +105,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	 */
 
 	@Override
-	public List<CategoryModel> viewAllCategory() throws OFDAException {
+	public List<CategoryModel> viewAllCategory() throws CategoryException {
 
 		return categoryRepository.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.RestaurantEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.RestaurantException;
 import com.cg.ofda.model.RestaurantModel;
 import com.cg.ofda.repository.IRestaurantRepository;
 import com.cg.ofda.util.EMParserRestaurant;
@@ -41,10 +41,10 @@ public class RestaurantServiceImpl implements IRestaurantService {
 
 	@Transactional
 	@Override
-	public RestaurantModel addRestaurant(RestaurantModel res) throws OFDAException {
+	public RestaurantModel addRestaurant(RestaurantModel res) throws RestaurantException {
 		if (res != null) {
 			if (resRepo.existsById(res.getRestaurantId())) {
-				throw new OFDAException("Restaurant with this id already exists");
+				throw new RestaurantException("Restaurant with this id already exists");
 			}
 			res = parser.parse(resRepo.save(parser.parse(res)));
 		}
@@ -59,11 +59,11 @@ public class RestaurantServiceImpl implements IRestaurantService {
 
 	@Transactional
 	@Override
-	public boolean removeRestaurant(Long restaurantId) throws OFDAException {
+	public boolean removeRestaurant(Long restaurantId) throws RestaurantException {
 		boolean isDeleted = false;
 		RestaurantEntity restaurant = resRepo.findById(restaurantId).orElse(null);
 		if (restaurant == null) {
-			throw new OFDAException("no restaurant with id #" + restaurantId + " present");
+			throw new RestaurantException("no restaurant with id #" + restaurantId + " present");
 		} else {
 			resRepo.deleteById(restaurantId);
 			isDeleted = true;
@@ -77,10 +77,10 @@ public class RestaurantServiceImpl implements IRestaurantService {
 
 	@Transactional
 	@Override
-	public RestaurantModel updateRestaurant(RestaurantModel res) throws OFDAException {
+	public RestaurantModel updateRestaurant(RestaurantModel res) throws RestaurantException {
 		if (res != null) {
 			if (!resRepo.existsById(res.getRestaurantId())) {
-				throw new OFDAException("No Such Restaurant Found");
+				throw new RestaurantException("No Such Restaurant Found");
 
 			}
 			res = parser.parse(resRepo.save(parser.parse(res)));
@@ -93,10 +93,10 @@ public class RestaurantServiceImpl implements IRestaurantService {
 	 */
 
 	@Override
-	public RestaurantModel viewRestaurant(Long restaurantId) throws OFDAException {
+	public RestaurantModel viewRestaurant(Long restaurantId) throws RestaurantException {
 		RestaurantEntity restaurant = resRepo.findById(restaurantId).orElse(null);
 		if (restaurant == null) {
-			throw new OFDAException("no restaurant with id #" + restaurantId + " present");
+			throw new RestaurantException("no restaurant with id #" + restaurantId + " present");
 		}
 		return parser.parse(resRepo.findById(restaurantId).orElse(null));
 	}
@@ -106,7 +106,7 @@ public class RestaurantServiceImpl implements IRestaurantService {
 	 */
 
 	@Override
-	public List<RestaurantModel> viewAllRestaurants() throws OFDAException {
+	public List<RestaurantModel> viewAllRestaurants() throws RestaurantException {
 
 		return parser.parseEntity(resRepo.findAll());
 	}

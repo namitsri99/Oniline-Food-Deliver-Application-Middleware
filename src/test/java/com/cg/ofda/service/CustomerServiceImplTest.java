@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cg.ofda.entity.CustomerEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CustomerException;
 import com.cg.ofda.model.AddressModel;
 import com.cg.ofda.model.CustomerModel;
 import com.cg.ofda.repository.ICustomerRepository;
@@ -24,6 +24,7 @@ import com.cg.ofda.repository.ICustomerRepository;
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceImplTest {
 
+	/* Mocking the Repository */
 	@Mock
 	private ICustomerRepository customerRepo;
 
@@ -39,54 +40,45 @@ public class CustomerServiceImplTest {
 
 	/*
 	 * For Viewing all the customers
-	 * */
-	
+	 */
+
 	@Test
 	@DisplayName("CustomerServiceImpl : viewAllCustomers for viewing all the customers")
-	public void testViewAllCustomers() throws OFDAException{
-		
-		List<CustomerEntity> testData= Arrays.asList(new CustomerEntity[] {
-				
-				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
-						"arpit@gmail.com"),
-				new CustomerEntity(2L, "Arpit", "Tailong", "male", "21", "9876543210", address,
-								"arpit@gmail.com")
-				
+	public void testViewAllCustomers() throws CustomerException {
+
+		List<CustomerEntity> testData = Arrays.asList(new CustomerEntity[] {
+
+				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"),
+				new CustomerEntity(2L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com")
+
 		});
-		
+
 		Mockito.when(customerRepo.findAll()).thenReturn(testData);
 
-		List<CustomerModel> expected= Arrays.asList(new CustomerModel[] {
-				
-				new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
-						"arpit@gmail.com"),
-				new CustomerModel(2L, "Arpit", "Tailong", "male", "21", "9876543210", address,
-								"arpit@gmail.com")
-				
+		List<CustomerModel> expected = Arrays.asList(new CustomerModel[] {
+
+				new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"),
+				new CustomerModel(2L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com")
+
 		});
-		
+
 		List<CustomerModel> actual = csImpl.findAllCustomer();
 		assertEquals(expected, actual);
-		
+
 	}
 
-	
-	
 	/*
 	 * For Adding the customer
 	 */
 
 	@Test
 	@DisplayName("CustomerServiceImpl::addCustomer should return added customer")
-	void testAddCustomer() throws OFDAException {
+	void testAddCustomer() throws CustomerException {
 		CustomerEntity testData = new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 				"arpit@gmail.com");
 		CustomerModel expected = new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 				"arpit@gmail.com");
 
-	
-		
-		
 		Mockito.when(customerRepo.save(testData)).thenReturn(testData);
 		CustomerModel actual = csImpl.addCustomer(expected);
 		assertEquals(expected, actual);
@@ -98,7 +90,7 @@ public class CustomerServiceImplTest {
 
 	@Test
 	@DisplayName("CustomerServiceImpl::updateCustomer should return updated customer")
-	void testUpdateCustomer() throws OFDAException {
+	void testUpdateCustomer() throws CustomerException {
 		CustomerEntity testData = new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 				"arpit@gmail.com");
 		CustomerModel expected = new CustomerModel(1L, "Shubham", "Tailong", "male", "21", "9876543210", address,
@@ -119,7 +111,7 @@ public class CustomerServiceImplTest {
 
 	@Test
 	@DisplayName("CustomerServiceImpl::removecustomer should return removed customer")
-	void testRemoveCustomer() throws OFDAException {
+	void testRemoveCustomer() throws CustomerException {
 		CustomerEntity testData = new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 				"arpit@gmail.com");
 		CustomerModel expected = new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
@@ -137,7 +129,7 @@ public class CustomerServiceImplTest {
 
 	@Test
 	@DisplayName("CustomerServiceImpl::viewcustomer should return an existing customer ")
-	void testViewCustomer() throws OFDAException {
+	void testViewCustomer() throws CustomerException {
 		CustomerEntity testdata = new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 				"arpit@gmail.com");
 		CustomerModel expected = new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,

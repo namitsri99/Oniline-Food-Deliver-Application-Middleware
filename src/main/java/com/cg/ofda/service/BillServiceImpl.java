@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.BillEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.BillException;
 import com.cg.ofda.model.BillModel;
 import com.cg.ofda.repository.IBillRepository;
 import com.cg.ofda.util.EMParserBill;
@@ -43,10 +43,10 @@ public class BillServiceImpl implements IBillService {
 
 	@Transactional
 	@Override
-	public BillModel addBill(BillModel bill) throws OFDAException {
+	public BillModel addBill(BillModel bill) throws BillException {
 		if (bill != null) {
 			if (billRepo.existsById(bill.getBillId())) {
-				throw new OFDAException("Bill with this id already exists");
+				throw new BillException("Bill with this id already exists");
 			}
 			bill = parser.parse(billRepo.save(parser.parse(bill)));
 		}
@@ -59,11 +59,11 @@ public class BillServiceImpl implements IBillService {
 
 	@Transactional
 	@Override
-	public BillModel updateBill(BillModel bill) throws OFDAException {
+	public BillModel updateBill(BillModel bill) throws BillException {
 
 		BillEntity bill1 = billRepo.findById(bill.getBillId()).orElse(null);
 		if (bill1 == null) {
-			throw new OFDAException("No Such Bill Found");
+			throw new BillException("No Such Bill Found");
 		}
 		bill = parser.parse(billRepo.save(parser.parse(bill)));
 		return bill;
@@ -75,11 +75,11 @@ public class BillServiceImpl implements IBillService {
 
 	@Transactional
 	@Override
-	public boolean removeBill(Long billId) throws OFDAException {
+	public boolean removeBill(Long billId) throws BillException {
 		boolean isDeleted = false;
 		BillEntity oldbill = billRepo.findById(billId).orElse(null);
 		if (oldbill == null) {
-			throw new OFDAException("no bill with id #" + billId + " present");
+			throw new BillException("no bill with id #" + billId + " present");
 		} else {
 			billRepo.deleteById(billId);
 			isDeleted = true;
@@ -93,10 +93,10 @@ public class BillServiceImpl implements IBillService {
 	 */
 
 	@Override
-	public BillModel viewBill(Long billId) throws OFDAException {
+	public BillModel viewBill(Long billId) throws BillException {
 		BillEntity oldbill = billRepo.findById(billId).orElse(null);
 		if (oldbill == null) {
-			throw new OFDAException("no bill with id #" + billId + " present");
+			throw new BillException("no bill with id #" + billId + " present");
 		}
 		return parser.parse(billRepo.findById(billId).orElse(null));
 	}
@@ -106,7 +106,7 @@ public class BillServiceImpl implements IBillService {
 	 */
 
 	@Override
-	public List<BillModel> viewAllBills() throws OFDAException {
+	public List<BillModel> viewAllBills() throws BillException {
 
 		return billRepo.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

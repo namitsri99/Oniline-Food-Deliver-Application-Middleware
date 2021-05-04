@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.OrderException;
 import com.cg.ofda.model.OrderDetailsModel;
 import com.cg.ofda.service.IOrderService;
 
@@ -31,7 +31,7 @@ public class OrderRestController {
 	 */
 	
 	@GetMapping
-	public ResponseEntity<List<OrderDetailsModel>> viewAllOrders() throws OFDAException {
+	public ResponseEntity<List<OrderDetailsModel>> viewAllOrders() throws OrderException {
 		return new ResponseEntity<>(orderService.viewAllOrders(), HttpStatus.OK);
 	}
 	
@@ -42,7 +42,7 @@ public class OrderRestController {
 	 */
 	
 	@PostMapping
-	public ResponseEntity<OrderDetailsModel> addOrder(@RequestBody OrderDetailsModel order) throws OFDAException {
+	public ResponseEntity<OrderDetailsModel> addOrder(@RequestBody OrderDetailsModel order) throws OrderException {
 		order = orderService.addOrder(order);
 		return new ResponseEntity<>(order, HttpStatus.CREATED);
 	}
@@ -54,7 +54,7 @@ public class OrderRestController {
 	 */
 	
 	@PutMapping
-	public ResponseEntity<OrderDetailsModel> updateOrder(@RequestBody OrderDetailsModel order) throws OFDAException {
+	public ResponseEntity<OrderDetailsModel> updateOrder(@RequestBody OrderDetailsModel order) throws OrderException {
 		order = orderService.updateOrder(order);
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
@@ -66,15 +66,13 @@ public class OrderRestController {
 	 */
 	
 	@DeleteMapping("/{orderId}")
-	public ResponseEntity<Void> removeOrder(@PathVariable("orderId") Long orderId) throws OFDAException{
+	public ResponseEntity<Void> removeOrder(@PathVariable("orderId") Long orderId) throws OrderException{
 		ResponseEntity<Void> response = null;
 		OrderDetailsModel order = orderService.viewOrder(orderId);
 		if (order == null) {
-			// response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			response = ResponseEntity.notFound().build();
 		} else {
 			orderService.removeOrder(orderId);
-			// response = new ResponseEntity<>(HttpStatus.OK);
 			response = ResponseEntity.ok().build();
 		}
 		return response;
@@ -87,7 +85,7 @@ public class OrderRestController {
 	 */
 	
 	@GetMapping("/{orderId}")
-	public ResponseEntity<OrderDetailsModel> viewOrder(@PathVariable("orderId") Long orderId) throws OFDAException {
+	public ResponseEntity<OrderDetailsModel> viewOrder(@PathVariable("orderId") Long orderId) throws OrderException {
 		ResponseEntity<OrderDetailsModel> response = null;
 		OrderDetailsModel order = orderService.viewOrder(orderId);
 		if (order == null) {

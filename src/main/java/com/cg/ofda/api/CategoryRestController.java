@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CategoryException;
 import com.cg.ofda.model.CategoryModel;
 import com.cg.ofda.service.ICategoryService;
 
@@ -32,7 +32,7 @@ public class CategoryRestController {
 	 * params : NIL
 	 */
 	@PostMapping
-	public ResponseEntity<CategoryModel>addCategory(@RequestBody CategoryModel category)throws OFDAException{
+	public ResponseEntity<CategoryModel>addCategory(@RequestBody CategoryModel category)throws CategoryException{
 		category=categoryService.addCategory(category);
 		return new ResponseEntity<>(category, HttpStatus.CREATED);
 	}
@@ -43,7 +43,7 @@ public class CategoryRestController {
 	 * params : NIL
 	 */
 	@PutMapping
-	public ResponseEntity<CategoryModel> updateCategory(@RequestBody CategoryModel category) throws OFDAException {
+	public ResponseEntity<CategoryModel> updateCategory(@RequestBody CategoryModel category) throws CategoryException {
 		category = categoryService.updateCategory(category);
 		 return new ResponseEntity<>(category, HttpStatus.OK);
 		
@@ -54,7 +54,7 @@ public class CategoryRestController {
 	 * params : catId
 	 */
 	@DeleteMapping("/{catId}")
-	public ResponseEntity<Void> removeCategory(@PathVariable("catId") Long catId) throws OFDAException{
+	public ResponseEntity<Void> removeCategory(@PathVariable("catId") Long catId) throws CategoryException{
 		ResponseEntity<Void> response = null;
 		CategoryModel category = categoryService.viewCategory(catId);
 		if (category == null) {
@@ -73,7 +73,7 @@ public class CategoryRestController {
 	 * params : catId
 	 */
 	@GetMapping("/{catId}")
-	public ResponseEntity<CategoryModel> viewCategory(@PathVariable("catId") Long catId) throws OFDAException {
+	public ResponseEntity<CategoryModel> viewCategory(@PathVariable("catId") Long catId) throws CategoryException {
 		ResponseEntity<CategoryModel> response = null;
 		CategoryModel category = categoryService.viewCategory(catId);
 		
@@ -92,7 +92,7 @@ public class CategoryRestController {
 	 * params : NIL
 	 */
 	@GetMapping
-	public ResponseEntity<List<CategoryModel>> viewAllCategory() throws OFDAException {
+	public ResponseEntity<List<CategoryModel>> viewAllCategory() throws CategoryException {
 		 return new ResponseEntity<>(categoryService.viewAllCategory(), HttpStatus.OK);
 		
 	}

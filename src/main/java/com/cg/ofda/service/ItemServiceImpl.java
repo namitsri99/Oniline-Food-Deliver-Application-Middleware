@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.ItemEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.ItemException;
 import com.cg.ofda.model.ItemModel;
 import com.cg.ofda.repository.IItemRepository;
 import com.cg.ofda.util.EMParserItem;
@@ -27,6 +27,8 @@ public class ItemServiceImpl implements IItemService {
 		this.parser = new EMParserItem();
 	}
 
+	/*Parameterized constructor for assigning
+	 * */
 	public ItemServiceImpl(IItemRepository itemRepo) {
 		super();
 		this.itemRepo = itemRepo;
@@ -39,10 +41,10 @@ public class ItemServiceImpl implements IItemService {
 
 	@Transactional
 	@Override
-	public ItemModel addItem(ItemModel item) throws OFDAException {
+	public ItemModel addItem(ItemModel item) throws ItemException {
 		if (item != null) {
 			if (itemRepo.existsById(item.getItemId())) {
-				throw new OFDAException("Item with this id already exists");
+				throw new ItemException("Item with this id already exists");
 			}
 
 			item = parser.parse(itemRepo.save(parser.parse(item)));
@@ -56,7 +58,7 @@ public class ItemServiceImpl implements IItemService {
 	 */
 
 	@Override
-	public ItemModel viewItem(Long id) throws OFDAException {
+	public ItemModel viewItem(Long id) throws ItemException {
 		ItemEntity item = itemRepo.findById(id).orElse(null);
 		return parser.parse(item);
 	}
@@ -67,10 +69,10 @@ public class ItemServiceImpl implements IItemService {
 
 	@Transactional
 	@Override
-	public ItemModel updateItem(ItemModel item) throws OFDAException {
+	public ItemModel updateItem(ItemModel item) throws ItemException {
 		ItemEntity oldItem = itemRepo.findById(item.getItemId()).orElse(null);
 		if (oldItem == null) {
-			throw new OFDAException("no item with id #" + item.getItemId() + " present");
+			throw new ItemException("no item with id #" + item.getItemId() + " present");
 		} else {
 			item = parser.parse(itemRepo.save(parser.parse(item)));
 		}
@@ -83,11 +85,11 @@ public class ItemServiceImpl implements IItemService {
 
 	@Transactional
 	@Override
-	public boolean removeItem(Long id) throws OFDAException {
+	public boolean removeItem(Long id) throws ItemException {
 		ItemEntity oldItem = itemRepo.findById(id).orElse(null);
 		boolean isDeleted = false;
 		if (oldItem == null) {
-			throw new OFDAException("no item with id #" + id + " present");
+			throw new ItemException("no item with id #" + id + " present");
 		} else {
 			itemRepo.deleteById(id);
 			isDeleted = true;
@@ -99,7 +101,7 @@ public class ItemServiceImpl implements IItemService {
 	 * Implementation of viewAllItems method to view all Items
 	 */
 	@Override
-	public List<ItemModel> viewAllItems() throws OFDAException {
+	public List<ItemModel> viewAllItems() throws ItemException {
 
 		return itemRepo.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

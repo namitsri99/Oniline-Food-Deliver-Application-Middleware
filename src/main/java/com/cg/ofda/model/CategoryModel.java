@@ -7,6 +7,10 @@ import javax.validation.constraints.NotNull;
 
 public class CategoryModel {
 	
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message="category id cannot be null")
 	private Long catId;
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.BillException;
 import com.cg.ofda.model.BillModel;
 import com.cg.ofda.service.IBillService;
 
@@ -31,7 +31,7 @@ public class BillRestController {
 	 * params : NIL
 	 */
 	@PostMapping
-	public ResponseEntity<BillModel>addBill(@RequestBody BillModel bill)throws OFDAException{
+	public ResponseEntity<BillModel>addBill(@RequestBody BillModel bill)throws BillException{
 		bill=billService.addBill(bill);
 		return new ResponseEntity<>(bill, HttpStatus.CREATED);
 	}
@@ -42,7 +42,7 @@ public class BillRestController {
 	 * params : NIL
 	 */
 	@PutMapping
-	public ResponseEntity<BillModel> updateBill(@RequestBody BillModel bill) throws OFDAException {
+	public ResponseEntity<BillModel> updateBill(@RequestBody BillModel bill) throws BillException {
 		bill = billService.updateBill(bill);
 		 return new ResponseEntity<>(bill, HttpStatus.OK);
 		
@@ -54,7 +54,7 @@ public class BillRestController {
 	 * params : billId
 	 */
 	@DeleteMapping("/{billId}")
-	public ResponseEntity<Void> deleteBill(@PathVariable("billId") Long billId) throws OFDAException{
+	public ResponseEntity<Void> deleteBill(@PathVariable("billId") Long billId) throws BillException{
 		ResponseEntity<Void> response = null;
 		BillModel bill = billService.viewBill(billId);
 		if (bill == null) {
@@ -74,7 +74,7 @@ public class BillRestController {
 	 * params : billId
 	 */
 	@GetMapping("/{billId}")
-	public ResponseEntity<BillModel> viewBill(@PathVariable("billId") Long billId) throws OFDAException {
+	public ResponseEntity<BillModel> viewBill(@PathVariable("billId") Long billId) throws BillException {
 		ResponseEntity<BillModel> response = null;
 		BillModel bill = billService.viewBill(billId);
 		
@@ -92,7 +92,7 @@ public class BillRestController {
 	 * params : NIL
 	 */
 	@GetMapping
-	public ResponseEntity<List<BillModel>> viewAllBills() throws OFDAException {
+	public ResponseEntity<List<BillModel>> viewAllBills() throws BillException {
 		 return new ResponseEntity<>(billService.viewAllBills(), HttpStatus.OK);
 		
 	}

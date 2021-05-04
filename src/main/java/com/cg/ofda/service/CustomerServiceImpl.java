@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.CustomerEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CustomerException;
 import com.cg.ofda.model.CustomerModel;
 import com.cg.ofda.repository.ICustomerRepository;
 import com.cg.ofda.util.EMParserCustomer;
@@ -43,10 +43,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Transactional
 	@Override
-	public CustomerModel addCustomer(CustomerModel customer) throws OFDAException {
+	public CustomerModel addCustomer(CustomerModel customer) throws CustomerException {
 		if (customer != null) {
 			if (customerRepo.existsById(customer.getCustomerId())) {
-				throw new OFDAException("Customer with this id already exists");
+				throw new CustomerException("Customer with this id already exists");
 			}
 
 			
@@ -62,10 +62,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Transactional
 	@Override
-	public CustomerModel updateCustomer(CustomerModel customer) throws OFDAException {
+	public CustomerModel updateCustomer(CustomerModel customer) throws CustomerException {
 		CustomerEntity oldCustomer = customerRepo.findById(customer.getCustomerId()).orElse(null);
 		if (oldCustomer == null) {
-			throw new OFDAException("no customer with id #" + customer.getCustomerId() + " present");
+			throw new CustomerException("no customer with id #" + customer.getCustomerId() + " present");
 		} else {
 	
 			customer = parser.parse(customerRepo.save(parser.parse(customer)));
@@ -79,11 +79,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Transactional
 	@Override
-	public boolean removeCustomer(Long customerId) throws OFDAException {
+	public boolean removeCustomer(Long customerId) throws CustomerException {
 		CustomerEntity oldCustomer = customerRepo.findById(customerId).orElse(null);
 		boolean isDeleted = false;
 		if (oldCustomer == null) {
-			throw new OFDAException("no customer with id #" + customerId + " present");
+			throw new CustomerException("no customer with id #" + customerId + " present");
 		} else {
 			customerRepo.deleteById(customerId);
 			isDeleted = true;
@@ -96,10 +96,10 @@ public class CustomerServiceImpl implements ICustomerService {
 	 */
 
 	@Override
-	public CustomerModel findCustomer(Long id) throws OFDAException {
+	public CustomerModel findCustomer(Long id) throws CustomerException {
 		CustomerEntity oldCustomer = customerRepo.findById(id).orElse(null);
 		if (oldCustomer == null) {
-			throw new OFDAException("no customer with id #" + id + " present");
+			throw new CustomerException("no customer with id #" + id + " present");
 		}
 		return parser.parse(customerRepo.findById(id).orElse(null));
 	}
@@ -109,7 +109,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	 */
 
 	@Override
-	public List<CustomerModel> findAllCustomer() throws OFDAException {
+	public List<CustomerModel> findAllCustomer() throws CustomerException {
 
 		return customerRepo.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

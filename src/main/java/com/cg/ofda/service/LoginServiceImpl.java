@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.LoginEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.LoginException;
 import com.cg.ofda.model.LoginModel;
 import com.cg.ofda.repository.ILoginRepository;
 import com.cg.ofda.util.EMParserLogin;
@@ -18,13 +18,14 @@ public class LoginServiceImpl implements ILoginService {
 	@Autowired
 	private EMParserLogin parser;
 
-	/*
-	 * Implementation of signIn method to signIn a user
-	 */
 
 	public LoginServiceImpl() {
 		this.parser = new EMParserLogin();
 	}
+	
+	
+	/*Parameterized constructor for assigning
+	 * */
 
 	public LoginServiceImpl(ILoginRepository loginRepository) {
 		super();
@@ -32,14 +33,19 @@ public class LoginServiceImpl implements ILoginService {
 		this.parser = new EMParserLogin();
 	}
 
+	
+
+	/*
+	 * Implementation of signIn method to signIn a user
+	 */	
 	@Override
-	public String signIn(Long id) throws OFDAException {
+	public String signIn(Long id) throws LoginException {
 
 		LoginEntity logEn = loginRepository.findById(id).orElse(null);
 		LoginModel logMod = parser.parse(logEn);
 
 		if (logMod == null)
-			throw new OFDAException("Invalid User");
+			throw new LoginException("Invalid User");
 
 		Long userId = logMod.getUserid();
 		String userName = logMod.getUserName();
@@ -53,7 +59,7 @@ public class LoginServiceImpl implements ILoginService {
 			return "Welcome User Login Successfull";
 
 		else
-			throw new OFDAException("Couldn't SignIn");
+			throw new LoginException("Couldn't SignIn");
 	}
 
 	/*
@@ -61,7 +67,7 @@ public class LoginServiceImpl implements ILoginService {
 	 */
 
 	@Override
-	public boolean signOut(LoginModel login) throws OFDAException {
+	public boolean signOut(LoginModel login) throws LoginException {
 		// implementation is done during front end
 		return false;
 	}

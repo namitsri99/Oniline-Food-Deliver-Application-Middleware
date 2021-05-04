@@ -23,7 +23,7 @@ import com.cg.ofda.entity.BillEntity;
 import com.cg.ofda.entity.CustomerEntity;
 import com.cg.ofda.entity.FoodCartEntity;
 import com.cg.ofda.entity.OrderDetailsEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.BillException;
 import com.cg.ofda.model.AddressModel;
 import com.cg.ofda.model.BillModel;
 import com.cg.ofda.model.CustomerModel;
@@ -34,6 +34,7 @@ import com.cg.ofda.repository.IBillRepository;
 @ExtendWith(MockitoExtension.class)
 public class BillServiceImplTest {
 
+	/* Mocking the Repository */
 	@Mock
 	private IBillRepository billRepo;
 
@@ -55,7 +56,7 @@ public class BillServiceImplTest {
 	 */
 	@Test
 	@DisplayName("BillServiceImpl::getAll should return list of existing bills in a duratiion as BillModel List")
-	void testGetAllBills() throws OFDAException {
+	void testGetAllBills() throws BillException {
 
 		List<BillEntity> testdata = Arrays.asList(new BillEntity[] {
 				new BillEntity(100L,
@@ -106,13 +107,12 @@ public class BillServiceImplTest {
 
 	@Test
 	@DisplayName("BillServiceImpl::addBill should return added bill")
-	void testAddBill() throws OFDAException {
+	void testAddBill() throws BillException {
 		BillEntity testData = new BillEntity(100L, new OrderDetailsEntity(), 10, bd,
 				LocalDateTime.of(LocalDate.of(2020, 03, 12), LocalTime.of(11, 30)));
 		BillModel expected = new BillModel(100L, new OrderDetailsModel(), 10, bd,
 				LocalDateTime.of(LocalDate.of(2020, 03, 12), LocalTime.of(11, 30)));
 
-//		Mockito.when(billRepo.existsById(testData.getBillId())).thenReturn(true);
 		Mockito.when(billRepo.save(testData)).thenReturn(testData);
 		BillModel actual = bsImpl.addBill(expected);
 		assertEquals(expected, actual);
@@ -124,14 +124,17 @@ public class BillServiceImplTest {
 
 	@Test
 	@DisplayName("BillServiceImpl::updateBill should return updated bill")
-	void testUpdateBill() throws OFDAException {
-		BillEntity testData = new BillEntity(100L, new OrderDetailsEntity(1000L, LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
-				new FoodCartEntity(), "Booked"), 10, bd, localDateTime);
-		BillModel expected = new BillModel(100L, new OrderDetailsModel(1000L, LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
-				new FoodCartModel(), "Booked"), 10, bd, localDateTime);
-
-		Mockito.when(billRepo.findById(testData.getBillId())).thenReturn(Optional.of(testData));
-		BillModel actual = bsImpl.updateBill(expected);
+	void testUpdateBill() throws BillException {
+		BillEntity testData = new BillEntity(100L, new OrderDetailsEntity(1000L,
+				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)), new FoodCartEntity(), "Booked"), 10,
+				bd, localDateTime);
+		BillModel expected = new BillModel(100L, new OrderDetailsModel(1000L,
+				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)), new FoodCartModel(), "Booked"), 11,
+				bd, localDateTime);
+		
+		testData.setTotalItem(11);
+		Mockito.when(billRepo.save(testData)).thenReturn(testData);
+		BillModel actual = bsImpl.addBill(expected);
 		assertEquals(expected, actual);
 
 	}
@@ -142,7 +145,7 @@ public class BillServiceImplTest {
 
 	@Test
 	@DisplayName("BillServiceImpl::removebill should return the removed bill")
-	void testRemoveBill() throws OFDAException {
+	void testRemoveBill() throws BillException {
 		BillEntity testData = new BillEntity(100L,
 				new OrderDetailsEntity(1000L, LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 						new FoodCartEntity(), "Booked"),
@@ -163,8 +166,8 @@ public class BillServiceImplTest {
 	 */
 
 	@Test
-	@DisplayName("BillServiceImpl::viewBill should return list of existing bills ")
-	void testViewBill() throws OFDAException {
+	@DisplayName("BillServiceImpl::viewBill should return existing bill ")
+	void testViewBill() throws BillException {
 		BillEntity testData = new BillEntity(100L,
 				new OrderDetailsEntity(1000L, LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 						new FoodCartEntity(101L,

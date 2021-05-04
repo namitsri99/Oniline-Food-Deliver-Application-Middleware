@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CartException;
 import com.cg.ofda.model.FoodCartModel;
 import com.cg.ofda.service.ICartService;
 
@@ -31,7 +31,7 @@ public class CartRestController {
 	 * params : NILL
 	 */
 	@GetMapping
-	public ResponseEntity<List<FoodCartModel>> viewAllCarts() throws OFDAException {
+	public ResponseEntity<List<FoodCartModel>> viewAllCarts() throws CartException {
 		 return new ResponseEntity<>(cartService.viewAllCarts(), HttpStatus.OK);
 		
 	}
@@ -42,7 +42,7 @@ public class CartRestController {
 	 * params : NIL
 	 */
 	@PostMapping
-	public ResponseEntity<FoodCartModel>addCart(@RequestBody FoodCartModel cart)throws OFDAException{
+	public ResponseEntity<FoodCartModel>addCart(@RequestBody FoodCartModel cart)throws CartException{
 		cart=cartService.addCart(cart);
 		return new ResponseEntity<>(cart, HttpStatus.CREATED);
 	}
@@ -53,7 +53,7 @@ public class CartRestController {
 	 * params : NIL
 	 */
 	@PutMapping
-	public ResponseEntity<FoodCartModel> updateCart(@RequestBody FoodCartModel cart) throws OFDAException {
+	public ResponseEntity<FoodCartModel> updateCart(@RequestBody FoodCartModel cart) throws CartException {
 		cart = cartService.updateCart(cart);
 		 return new ResponseEntity<>(cart, HttpStatus.OK);
 		
@@ -64,7 +64,7 @@ public class CartRestController {
 	 * params : cartId
 	 */
 	@DeleteMapping("/{cartId}")
-	public ResponseEntity<Void> deleteCart(@PathVariable("cartId") Long cartId) throws OFDAException{
+	public ResponseEntity<Void> deleteCart(@PathVariable("cartId") Long cartId) throws CartException{
 		ResponseEntity<Void> response = null;
 		FoodCartModel cart = cartService.viewCart(cartId);
 		/*Checking whether the cartId is valid for existing cart*/
@@ -84,7 +84,7 @@ public class CartRestController {
 	 * params : cartId
 	 */
 	@GetMapping("/{cartId}")
-	public ResponseEntity<FoodCartModel> viewCart(@PathVariable("cartId") Long cartId) throws OFDAException {
+	public ResponseEntity<FoodCartModel> viewCart(@PathVariable("cartId") Long cartId) throws CartException {
 		ResponseEntity<FoodCartModel> response = null;
 		FoodCartModel cart = cartService.viewCart(cartId);
 		
@@ -103,7 +103,7 @@ public class CartRestController {
 	 */
 		
 	@DeleteMapping()
-	public ResponseEntity<FoodCartModel> clearcart(@PathVariable("cart") FoodCartModel cart) throws OFDAException{
+	public ResponseEntity<FoodCartModel> clearcart(@PathVariable("cart") FoodCartModel cart) throws CartException{
 		ResponseEntity<FoodCartModel> response = null;
 		FoodCartModel foodCart=cartService.clearCart(cart);
 		if(foodCart == null) {

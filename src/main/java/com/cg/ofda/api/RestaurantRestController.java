@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.RestaurantException;
 import com.cg.ofda.model.RestaurantModel;
 import com.cg.ofda.service.IRestaurantService;
 
@@ -31,7 +31,7 @@ public class RestaurantRestController {
 	 * params : NIL
 	 */
 	@PostMapping
-	public ResponseEntity<RestaurantModel>addRestaurant(@RequestBody RestaurantModel rest)throws OFDAException{
+	public ResponseEntity<RestaurantModel>addRestaurant(@RequestBody RestaurantModel rest)throws RestaurantException{
 		rest=restaurantService.addRestaurant(rest);
 		return new ResponseEntity<>(rest, HttpStatus.CREATED);
 		
@@ -43,7 +43,7 @@ public class RestaurantRestController {
 	 * params : restaurantId
 	 */
 	@DeleteMapping("/{restaurantId}")
-	public ResponseEntity<Void> removeRestaurant(@PathVariable("restaurantId")  Long restaurantId) throws OFDAException{
+	public ResponseEntity<Void> removeRestaurant(@PathVariable("restaurantId")  Long restaurantId) throws RestaurantException{
 		ResponseEntity<Void> response = null;
 		RestaurantModel rest = restaurantService.viewRestaurant(restaurantId);
 		if ( rest== null) {
@@ -62,7 +62,7 @@ public class RestaurantRestController {
 	 * params : NIL
 	 */
 	@PutMapping
-	public ResponseEntity<RestaurantModel> updateRestaurant(@RequestBody RestaurantModel rest) throws OFDAException {
+	public ResponseEntity<RestaurantModel> updateRestaurant(@RequestBody RestaurantModel rest) throws RestaurantException {
 		rest = restaurantService.updateRestaurant(rest);
 		 return new ResponseEntity<>(rest, HttpStatus.OK);
 		
@@ -73,7 +73,7 @@ public class RestaurantRestController {
 	 * params : restId
 	 */
 	@GetMapping("{/restId}")
-	public ResponseEntity<RestaurantModel> viewRestaurant(@PathVariable("restId") Long restId) throws OFDAException {
+	public ResponseEntity<RestaurantModel> viewRestaurant(@PathVariable("restId") Long restId) throws RestaurantException {
 		ResponseEntity<RestaurantModel> response = null;
 		RestaurantModel rest = restaurantService.viewRestaurant(restId);
 		
@@ -91,16 +91,11 @@ public class RestaurantRestController {
 	 * params : NIL
 	 */
 	@GetMapping
-	public ResponseEntity<List<RestaurantModel>> viewAllRestaurants() throws OFDAException {
+	public ResponseEntity<List<RestaurantModel>> viewAllRestaurants() throws RestaurantException {
 		 return new ResponseEntity<>(restaurantService.viewAllRestaurants(), HttpStatus.OK);
 		
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<List<RestaurantModel>> viewRestaurantByItemName(String name) throws OFDAException {
-//		 return new ResponseEntity<>(restaurantService.viewRestaurantByItemName(name), HttpStatus.OK);
-//		
-//	}
 	
 
 }

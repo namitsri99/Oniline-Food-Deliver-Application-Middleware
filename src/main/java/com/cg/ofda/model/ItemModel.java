@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 
 public class ItemModel {
 
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message = "Item id cannot be null")
 	private Long itemId;
 

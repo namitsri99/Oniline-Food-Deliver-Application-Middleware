@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.FoodCartEntity;
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CartException;
 import com.cg.ofda.model.FoodCartModel;
 import com.cg.ofda.repository.ICartRepository;
 import com.cg.ofda.util.EMParserFoodCart;
@@ -22,10 +22,14 @@ public class CartServiceImpl implements ICartService {
 
 	@Autowired
 	private EMParserFoodCart parser;
+	
+	/*Default Constructor*/
 
 	public CartServiceImpl() {
 		this.parser = new EMParserFoodCart();
 	}
+	
+	/*Parameterized Constructor*/
 
 	public CartServiceImpl(ICartRepository cartRepo) {
 		super();
@@ -33,65 +37,17 @@ public class CartServiceImpl implements ICartService {
 		this.parser = new EMParserFoodCart();
 	}
 
-//	@Transactional
-//	@Override
-//	public FoodCartModel addItemToCart(FoodCartModel cart, ItemModel item) throws OFDAException {
-//		if (item != null) {
-//			if (cartRepo.existsById(item.getItemId())) {
-//				throw new OFDAException("Item with this id already exists");
-//			}
-//			
-//			List<ItemModel> item1= new ArrayList<>();
-//			item1.add(item);
-//			cart.setItemList(item1);
-//			
-//			cart = parser.parse(cartRepo.save(parser.parse(cart)));
-//		}
-//
-//		return cart;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public FoodCartModel increaseQuantity(FoodCartModel cart, ItemModel item, int quantity) throws OFDAException {
-//
-//		if (item != null) {
-//			if (!cartRepo.existsById(item.getItemId())) {
-//				throw new OFDAException("Item with this id does not exists");
-//			}
-//			item.setQuantity(item.getQuantity() + quantity);
-//			item.setFoodCart(cart);
-//			cart = parser.parse(cartRepo.save(parser.parse(cart)));
-//		}
-//
-//		return cart;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public FoodCartModel reduceQuantity(FoodCartModel cart, ItemModel item, int quantity) throws OFDAException {
-//		if (item != null) {
-//			if (!cartRepo.existsById(item.getItemId())) {
-//				throw new OFDAException("Item with this id does not exists");
-//			}
-//			item.setQuantity(item.getQuantity() - quantity);
-//			item.setFoodCart(cart);
-//			cart = parser.parse(cartRepo.save(parser.parse(cart)));
-//		}
-//
-//		return cart;
-//	}
 
 	/* Implementaion of removeCart to remove the existing cart */
 
 	@Transactional
 	@Override
-	public boolean removeCart(Long cartId) throws OFDAException {
+	public boolean removeCart(Long cartId) throws CartException {
 
 		FoodCartEntity oldCart = cartRepo.findById(cartId).orElse(null);
 		boolean isDeleted = false;
 		if (oldCart == null) {
-			throw new OFDAException("no cart with id #" + cartId + " present");
+			throw new CartException("no cart with id #" + cartId + " present");
 		} else {
 			cartRepo.deleteById(cartId);
 			isDeleted = true;
@@ -103,11 +59,11 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public FoodCartModel addCart(FoodCartModel cart) throws OFDAException {
+	public FoodCartModel addCart(FoodCartModel cart) throws CartException {
 
 		if (cart != null) {
 			if (cartRepo.existsById(cart.getCartId())) {
-				throw new OFDAException("Cart with this id already exists");
+				throw new CartException("Cart with this id already exists");
 			}
 			cart = parser.parse(cartRepo.save(parser.parse(cart)));
 		}
@@ -119,10 +75,10 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public FoodCartModel updateCart(FoodCartModel cart) throws OFDAException {
+	public FoodCartModel updateCart(FoodCartModel cart) throws CartException {
 		FoodCartEntity cart1 = cartRepo.findById(cart.getCartId()).orElse(null);
 		if (cart1 == null) {
-			throw new OFDAException("no cart with id #" + cart.getCartId() + " present");
+			throw new CartException("no cart with id #" + cart.getCartId() + " present");
 		}
 		cart = parser.parse(cartRepo.save(parser.parse(cart)));
 		return cart;
@@ -132,7 +88,7 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public FoodCartModel clearCart(FoodCartModel cart) throws OFDAException {
+	public FoodCartModel clearCart(FoodCartModel cart) throws CartException {
 		cartRepo.deleteAll();
 		return cart;
 	}
@@ -141,11 +97,11 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public FoodCartModel viewCart(Long cartId) throws OFDAException {
+	public FoodCartModel viewCart(Long cartId) throws CartException {
 
 		FoodCartEntity foodCart = cartRepo.findById(cartId).orElse(null);
 		if (foodCart == null) {
-			throw new OFDAException("cart with id #" + cartId + " not exists");
+			throw new CartException("cart with id #" + cartId + " not exists");
 		}
 		return parser.parse(cartRepo.findById(cartId).orElse(null));
 	}
@@ -154,7 +110,7 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public List<FoodCartModel> viewAllCarts() throws OFDAException {
+	public List<FoodCartModel> viewAllCarts() throws CartException {
 
 		return cartRepo.findAll().stream().map(parser::parse).collect(Collectors.toList());
 

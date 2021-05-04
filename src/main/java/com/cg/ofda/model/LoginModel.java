@@ -4,6 +4,11 @@ import javax.validation.constraints.Pattern;
 
 public class LoginModel {
 
+	
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@Pattern(regexp = "[a-zA-Z0-9]{6,12}", message = "UserId should be valid")
 	private Long userid;
 

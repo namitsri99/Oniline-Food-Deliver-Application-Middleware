@@ -9,6 +9,10 @@ import javax.validation.constraints.Pattern;
 
 public class CustomerModel {
 	
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	
 	@NotNull(message="customer id cannot be null")
 	private Long customerId;
@@ -250,6 +254,8 @@ public class CustomerModel {
 		return true;
 	}
 
+	
+	/* Corresponding toString*/
 
 	@Override
 	public String toString() {

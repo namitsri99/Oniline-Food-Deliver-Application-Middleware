@@ -11,6 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class OrderDetailsModel {
 
+	/*
+	 * All the private members are validate here with suitable datatypes
+	 * 
+	 */
 	@NotNull(message = "Order id cannot be null")
 	private Long orderId;
 

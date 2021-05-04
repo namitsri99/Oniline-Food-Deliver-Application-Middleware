@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.ofda.exception.OFDAException;
+import com.cg.ofda.exception.CustomerException;
 import com.cg.ofda.model.CustomerModel;
 import com.cg.ofda.service.ICustomerService;
 
@@ -32,7 +32,7 @@ public class CustomerRestControlller {
 	 */
 	
 	@GetMapping
-	public ResponseEntity<List<CustomerModel>> findAllCustomer() throws OFDAException {
+	public ResponseEntity<List<CustomerModel>> findAllCustomer() throws CustomerException {
 		return new ResponseEntity<>(customerService.findAllCustomer(), HttpStatus.OK);
 	}
 	
@@ -43,7 +43,7 @@ public class CustomerRestControlller {
 	 */
 	
 	@PostMapping
-	public ResponseEntity<CustomerModel> addCustomer(@RequestBody CustomerModel customer) throws OFDAException {
+	public ResponseEntity<CustomerModel> addCustomer(@RequestBody CustomerModel customer) throws CustomerException {
 		customer = customerService.addCustomer(customer);
 		return new ResponseEntity<>(customer, HttpStatus.CREATED);
 	}
@@ -55,9 +55,8 @@ public class CustomerRestControlller {
 	 */
 	
 	@PutMapping
-	public ResponseEntity<CustomerModel> updateCustomer(@RequestBody CustomerModel customer) throws OFDAException {
+	public ResponseEntity<CustomerModel> updateCustomer(@RequestBody CustomerModel customer) throws CustomerException {
 		customer = customerService.updateCustomer(customer);
-		// return new ResponseEntity<>(emp, HttpStatus.OK);
 		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
 	
@@ -68,16 +67,14 @@ public class CustomerRestControlller {
 	 */
 	
 	@DeleteMapping("/{customerId}")
-	public ResponseEntity<Void> removeCustomer(@PathVariable("customerId") Long id) throws OFDAException{
+	public ResponseEntity<Void> removeCustomer(@PathVariable("customerId") Long id) throws CustomerException{
 		ResponseEntity<Void> response = null;
 		CustomerModel customer = customerService.findCustomer(id);
 		if (customer == null) {
 			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			//response = ResponseEntity.notFound().build();
 		} else {
 			customerService.removeCustomer(id);
 			response = new ResponseEntity<>(HttpStatus.OK);
-			//response = ResponseEntity.ok().build();
 		}
 		return response;
 	}
@@ -89,7 +86,7 @@ public class CustomerRestControlller {
 	 */
 	
 	@GetMapping("/{customerId}")
-	public ResponseEntity<CustomerModel> findCustomer(@PathVariable("customerId") Long id) throws OFDAException {
+	public ResponseEntity<CustomerModel> findCustomer(@PathVariable("customerId") Long id) throws CustomerException {
 		ResponseEntity<CustomerModel> response = null;
 		CustomerModel customer = customerService.findCustomer(id);
 		if (customer == null) {
