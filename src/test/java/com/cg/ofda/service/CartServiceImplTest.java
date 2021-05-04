@@ -99,11 +99,12 @@ public class CartServiceImplTest {
 	void testUpdateCart() throws CartException {
 		FoodCartEntity testData = new FoodCartEntity(101L,
 				new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
-		FoodCartModel expected = new FoodCartModel(101L,
-				new CustomerModel(1L, "Shubham", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
+		FoodCartModel expected = new FoodCartModel(102L,
+				new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address, "arpit@gmail.com"));
 		
-		Mockito.when(cartRepo.findById(testData.getCartId())).thenReturn(Optional.of(testData));
-		FoodCartModel actual = csImpl.updateCart(expected);
+		testData.setCartId(102L);
+		Mockito.when(cartRepo.save(testData)).thenReturn(testData);
+		FoodCartModel actual = csImpl.addCart(expected);
 		assertEquals(expected, actual);
 
 	}

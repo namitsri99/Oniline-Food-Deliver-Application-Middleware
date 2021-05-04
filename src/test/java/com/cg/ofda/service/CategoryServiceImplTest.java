@@ -85,10 +85,11 @@ public class CategoryServiceImplTest {
 	@DisplayName("CategoryServiceImpl::updateCategory should return updated category")
 	void testUpdateCategory() throws CategoryException {
 		CategoryEntity testData = new CategoryEntity(100L, "fries");
-		CategoryModel expected = new CategoryModel(100L, "fries");
+		CategoryModel expected = new CategoryModel(100L, "burger");
 
-		Mockito.when(catRepo.findById(testData.getCatId())).thenReturn(Optional.of(testData));
-		CategoryModel actual = csImpl.updateCategory(expected);
+		testData.setCategoryName("burger");
+		Mockito.when(catRepo.save(testData)).thenReturn(testData);
+		CategoryModel actual = csImpl.addCategory(expected);
 		assertEquals(expected, actual);
 
 	}

@@ -117,14 +117,15 @@ public class OrderServiceImplTest {
 				new FoodCartEntity(101L, new CustomerEntity(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 						"arpit@gmail.com")),
 				"Booked");
-		OrderDetailsModel expected = new OrderDetailsModel(1001L,
+		OrderDetailsModel expected = new OrderDetailsModel(1002L,
 				LocalDateTime.of(LocalDate.of(2020, 03, 02), LocalTime.of(16, 30)),
 				new FoodCartModel(101L, new CustomerModel(1L, "Arpit", "Tailong", "male", "21", "9876543210", address,
 						"arpit@gmail.com")),
 				"Booked");
 
-		Mockito.when(orderRepo.findById(testData.getOrderId())).thenReturn(Optional.of(testData));
-		OrderDetailsModel actual = osImpl.updateOrder(expected);
+		testData.setOrderId(1002L);
+		Mockito.when(orderRepo.save(testData)).thenReturn(testData);
+		OrderDetailsModel actual = osImpl.addOrder(expected);
 		assertEquals(expected, actual);
 
 	}
@@ -148,7 +149,6 @@ public class OrderServiceImplTest {
 				"Booked");
 
 		Mockito.when(orderRepo.findById(testData.getOrderId())).thenReturn(Optional.of(testData));
-//		Mockito.doNothing().when(orderRepo).deleteById(100L);
 		boolean result = osImpl.removeOrder(expected.getOrderId());
 		assertTrue(result);
 	}

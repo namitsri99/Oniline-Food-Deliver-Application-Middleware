@@ -98,9 +98,9 @@ public class CustomerServiceImplTest {
 
 		testData.setFirstName("Shubham");
 
-		Mockito.when(customerRepo.findById(testData.getCustomerId())).thenReturn(Optional.of(testData));
+		Mockito.when(customerRepo.save(testData)).thenReturn(testData);
 
-		CustomerModel actual = csImpl.updateCustomer(expected);
+		CustomerModel actual = csImpl.addCustomer(expected);
 		assertEquals(expected, actual);
 
 	}
