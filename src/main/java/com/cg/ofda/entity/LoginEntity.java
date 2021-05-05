@@ -12,6 +12,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+/*To create table "login"*/
 @Table(name = "login")
 public class LoginEntity implements Serializable {
 
@@ -23,12 +24,15 @@ public class LoginEntity implements Serializable {
 	 */
 
 	@Id
+	/*To create user_id column*/
 	@Column(name = "user_id", length = 19)
 	private Long userid;
 
+	/*To create user_name column*/
 	@Column(name = "user_name", unique = true, length = 50)
 	private String userName;
 
+	/*To create password column*/
 	@Column(name = "password", length = 50)
 	private String password;
 

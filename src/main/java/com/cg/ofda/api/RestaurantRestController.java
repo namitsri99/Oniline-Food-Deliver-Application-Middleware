@@ -22,6 +22,10 @@ import com.cg.ofda.service.IRestaurantService;
 @RequestMapping(path="/restaurant")
 public class RestaurantRestController {
 	
+	/*
+	 * Restaurant Service is Autowired 
+     */
+	
 	@Autowired
 	private IRestaurantService restaurantService;
 	
@@ -72,7 +76,7 @@ public class RestaurantRestController {
 	 * return : rest
 	 * params : restId
 	 */
-	@GetMapping("{/restId}")
+	@GetMapping("/{restId}")
 	public ResponseEntity<RestaurantModel> viewRestaurant(@PathVariable("restId") Long restId) throws RestaurantException {
 		ResponseEntity<RestaurantModel> response = null;
 		RestaurantModel rest = restaurantService.viewRestaurant(restId);

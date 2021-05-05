@@ -18,69 +18,90 @@ import com.cg.ofda.exception.RestaurantException;
 @RestControllerAdvice
 public class ExceptionAdvisor {
 
-	/* For Bill Exception */
+	/* 
+	 * For Bill Exception
+	 */
+	
 	@ExceptionHandler(BillException.class)
 	public ResponseEntity<String> handleBillExceptionAction(BillException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Cart Exception */
+	/* 
+	 * For Cart Exception 
+	 */
 
 	@ExceptionHandler(CartException.class)
 	public ResponseEntity<String> handleCartExceptionAction(CartException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Category Exception */
+	/* 
+	 * For Category Exception 
+	 */
 
 	@ExceptionHandler(CategoryException.class)
 	public ResponseEntity<String> handleCategoryExceptionAction(CategoryException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
-	/* For Customer Exception */
+	/*
+	 * For Customer Exception 
+	 */
 	
 	@ExceptionHandler(CustomerException.class)
 	public ResponseEntity<String> handleCustomerExceptionAction(CustomerException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Item Exception */
+	/*
+	 * For Item Exception
+	 */
 
 	@ExceptionHandler(ItemException.class)
 	public ResponseEntity<String> handleItemExceptionAction(ItemException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Order Exception */
+	/*
+	 * For Order Exception 
+	 */
 
 	@ExceptionHandler(OrderException.class)
 	public ResponseEntity<String> handleOrderExceptionAction(OrderException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Restaurant Exception */
+	/*
+	 * For Restaurant Exception 
+	 */
 
 	@ExceptionHandler(RestaurantException.class)
 	public ResponseEntity<String> handleRestaurantExceptionAction(RestaurantException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For Login Exception */
+	/* 
+	 * For Login Exception 
+	 */
 
 	@ExceptionHandler(LoginException.class)
 	public ResponseEntity<String> handleLoginExceptionAction(LoginException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	/* For OFDA Exception */
+	/* 
+	 * For OFDA Exception 
+	 */
 
 	@ExceptionHandler(OFDAException.class)
 	public ResponseEntity<String> handleOFDAExceptionAction(OFDAException excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
-	/* For internal server error */
+	/* 
+	 * For internal server error 
+	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleExceptionAction(Exception excep) {
 		return new ResponseEntity<>(excep.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

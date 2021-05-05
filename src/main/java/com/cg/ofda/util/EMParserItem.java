@@ -8,41 +8,35 @@ import org.springframework.stereotype.Service;
 
 import com.cg.ofda.entity.ItemEntity;
 import com.cg.ofda.model.ItemModel;
-import com.cg.ofda.repository.IItemRepository;
 
 @Service
 public class EMParserItem {
-
-//	@Autowired
-//	private IItemRepository itemRepo;
+	
+	/*
+	 * EMParserFoodCart is Autowired
+     */
 	
 	@Autowired
 	private EMParserFoodCart cartParser;
 	
+	/*
+	 * EMParserCategory is Autowired
+     */
+	
 	@Autowired
 	private EMParserCategory categoryParser;
+	
+	/*
+	 * EMParserRestaurant is Autowired
+     */
 	
 	@Autowired
 	private EMParserRestaurant restaurantParser;
 	
-//	public EMParserItem() {
-//		this.cartParser= new EMParserFoodCart();
-//		this.categoryParser= new EMParserCategory();
-//		this.restaurantParser= new EMParserRestaurant();	
-//	}
-//	
-//	
-//	
-//	public EMParserItem(IItemRepository itemRepo) {
-//		super();
-////		this.itemRepo = itemRepo;
-//		this.cartParser= new EMParserFoodCart();
-//		this.categoryParser= new EMParserCategory();
-//		this.restaurantParser= new EMParserRestaurant();
-//	}
-
-
-
+	/*
+	 * Method to parse Model to Entity
+     */
+	
 	public ItemEntity parse(ItemModel source) {
 		return source == null ? null :
 			new ItemEntity(source.getItemId(),
@@ -53,6 +47,10 @@ public class EMParserItem {
 					restaurantParser.parse(source.getRestaurants()),
 					cartParser.parse(source.getFoodCart()));
 	}
+	
+	/*
+	 * Method to parse Entity to Model
+     */
 	
 	public ItemModel parse(ItemEntity source) {
 		return source == null ? null :

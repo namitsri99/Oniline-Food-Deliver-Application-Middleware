@@ -16,9 +16,17 @@ import com.cg.ofda.util.EMParserFoodCart;
 
 @Service
 public class CartServiceImpl implements ICartService {
+	
+	/*
+	 * Cart Repository is Autowired 
+     */
 
 	@Autowired
 	private ICartRepository cartRepo;
+	
+	/*
+	 * EMParserFoodCart is Autowired 
+     */
 
 	@Autowired
 	private EMParserFoodCart parser;

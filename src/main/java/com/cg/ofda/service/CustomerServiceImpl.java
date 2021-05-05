@@ -16,12 +16,27 @@ import com.cg.ofda.util.EMParserCustomer;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
+	
+	public static final String NOT_FOUND = "no customer with id #";
+	public static final String PRESENT = "present";
+	
+	/*
+	 * Customer Repository is Autowired 
+     */
 
 	@Autowired
 	private ICustomerRepository customerRepo;
+	
+	/*
+	 * EMParserCustomer is Autowired 
+     */
 
 	@Autowired
 	private EMParserCustomer parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public CustomerServiceImpl() {
 		this.parser = new EMParserCustomer();
@@ -65,7 +80,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public CustomerModel updateCustomer(CustomerModel customer) throws CustomerException {
 		CustomerEntity oldCustomer = customerRepo.findById(customer.getCustomerId()).orElse(null);
 		if (oldCustomer == null) {
-			throw new CustomerException("no customer with id #" + customer.getCustomerId() + " present");
+			throw new CustomerException(NOT_FOUND + customer.getCustomerId() + PRESENT);
 		} else {
 	
 			customer = parser.parse(customerRepo.save(parser.parse(customer)));
@@ -83,7 +98,7 @@ public class CustomerServiceImpl implements ICustomerService {
 		CustomerEntity oldCustomer = customerRepo.findById(customerId).orElse(null);
 		boolean isDeleted = false;
 		if (oldCustomer == null) {
-			throw new CustomerException("no customer with id #" + customerId + " present");
+			throw new CustomerException(NOT_FOUND + customerId + PRESENT);
 		} else {
 			customerRepo.deleteById(customerId);
 			isDeleted = true;
@@ -99,7 +114,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public CustomerModel findCustomer(Long id) throws CustomerException {
 		CustomerEntity oldCustomer = customerRepo.findById(id).orElse(null);
 		if (oldCustomer == null) {
-			throw new CustomerException("no customer with id #" + id + " present");
+			throw new CustomerException(NOT_FOUND + id + PRESENT);
 		}
 		return parser.parse(customerRepo.findById(id).orElse(null));
 	}

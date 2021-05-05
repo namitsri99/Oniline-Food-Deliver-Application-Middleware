@@ -18,6 +18,7 @@ import javax.persistence.Table;
  */
 
 @Entity
+/*To set table name as "food_cart"*/
 @Table(name="food_cart")
 public class FoodCartEntity implements Serializable{
 	
@@ -30,16 +31,20 @@ public class FoodCartEntity implements Serializable{
 	 */
 	
 	@Id
+	/*To create cart_id column */
 	@Column(name="cart_id",length=19)
 	private Long cartId;
 	
+	/*To specify OneToOne relationship*/
 	@OneToOne
 	@JoinColumn(name="cust_id")
 	private CustomerEntity customer;
 	
+	/*To specify OneToMany relationship*/
 	@OneToMany(mappedBy = "foodCart",cascade=CascadeType.ALL)
 	private List<ItemEntity> itemList;
 	
+	/*To specify OneToOne relationship*/
 	@OneToOne(mappedBy ="cart",cascade=CascadeType.PERSIST)
 	private OrderDetailsEntity orderDetails;
 	

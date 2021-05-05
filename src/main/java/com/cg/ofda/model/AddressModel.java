@@ -13,31 +13,45 @@ public class AddressModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	/*	To validate buildingName cannot be null and size>0*/
 	@NotEmpty(message="building name cannot be empty")
+	/*	To validate buildingName cannot be null but can be empty*/
 	@NotNull(message="building name cannot be omitted")
 	private String buildingName;
 	
+	/*	To validate area cannot be null and size>0*/
 	@NotEmpty(message="area cannot be empty")
+	/*	To validate area cannot be null but can be empty*/
 	@NotNull(message="area cannot be omitted")
 	private String area;
 	
+	/*	To validate streetNo cannot be null and size>0*/
 	@NotEmpty(message="streetNo cannot be empty")
+	/*	To validate streetNo cannot be null but can be empty*/
 	@NotNull(message="streetNo cannot be omitted")
 	private String streetNo;
 	
+	/*	To validate city cannot be null and size>0*/
 	@NotEmpty(message="city cannot be empty")
+	/*	To validate city cannot be null but can be empty*/
 	@NotNull(message="city cannot be omitted")
 	private String city;
 	
+	/*	To validate state cannot be null and size>0*/
 	@NotEmpty(message="state cannot be empty")
+	/*	To validate state cannot be null but can be empty*/
 	@NotNull(message="state cannot be omitted")
 	private String state;
 	
+	/*	To validate country cannot be null and size>0*/
 	@NotEmpty(message="country cannot be empty")
+	/*	To validate country cannot be null but can be empty*/
 	@NotNull(message="country cannot be omitted")
 	private String country;
 	
+	/*To check minimum digits of pincode*/
 	@Min(value=6, message="pincode should be of 6 digits")
+	/*To check maximum digits of pincode*/
 	@Max(value=6, message="pincode should be of 6 digits")
 	private String pincode;
 	

@@ -18,6 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+/*To create table "items"*/
 @Table(name="items")
 public class ItemEntity implements Serializable{
 	
@@ -29,25 +30,32 @@ public class ItemEntity implements Serializable{
 	 */
 	
 	@Id
+	/*For creating item_id column*/
 	@Column(name="item_id",length=19)
 	private Long itemId;
 	
+	/*For creating item_name column*/
 	@Column(name="item_name",length=30)
 	private String itemName;
 	
+	/*Specifies ManyToOne relationship*/
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private CategoryEntity category;
 	
+	/*For creating quantity column*/
 	@Column(name="quantity")
 	private Integer quantity;
 	
+	/*For creating cost column*/
 	@Column(name="cost")
 	private BigDecimal cost;
 	
+	/*Specifies ManyToMany relationship*/ 
 	@ManyToMany(mappedBy="itemList" ,cascade= CascadeType.ALL)
 	private List<RestaurantEntity> restaurants;
 	
+	/*Specifies ManyToOne relationship*/
 	@ManyToOne
 	@JoinColumn(name="cart_id")
 	private FoodCartEntity foodCart;

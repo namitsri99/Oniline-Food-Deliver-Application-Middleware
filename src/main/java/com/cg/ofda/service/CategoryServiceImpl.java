@@ -16,12 +16,28 @@ import com.cg.ofda.util.EMParserCategory;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
+	
+	public static final String NOT_FOUND = "no category with id #";
+	public static final String PRESENT = " present";
+
+	
+	/*
+	 * Category Repository is Autowired 
+     */
 
 	@Autowired
 	private ICategoryRepository categoryRepository;
+	
+	/*
+	 * EMParserCategory is Autowired 
+     */
 
 	@Autowired
 	private EMParserCategory parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public CategoryServiceImpl() {
 		this.parser = new EMParserCategory();
@@ -64,7 +80,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	public CategoryModel updateCategory(CategoryModel cat) throws CategoryException {
 		CategoryEntity category= categoryRepository.findById(cat.getCatId()).orElse(null);
 		if(category== null)
-			throw new CategoryException("no category with id #" + cat.getCatId() + " present");
+			throw new CategoryException(NOT_FOUND + cat.getCatId() + PRESENT);
 		cat = parser.parse(categoryRepository.save(parser.parse(cat)));
 		return cat;
 	}
@@ -79,7 +95,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		CategoryEntity oldEntity = categoryRepository.findById(catId).orElse(null);
 		boolean isDeleted = false;
 		if (oldEntity == null) {
-			throw new CategoryException("no category with id #" + catId + " present");
+			throw new CategoryException(NOT_FOUND + catId + PRESENT);
 		} else {
 			categoryRepository.deleteById(catId);
 			isDeleted = true;
@@ -95,7 +111,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	public CategoryModel viewCategory(Long catId) throws CategoryException {
 		CategoryEntity oldCategory = categoryRepository.findById(catId).orElse(null);
 		if (oldCategory == null) {
-			throw new CategoryException("no category with id #" + catId + " present");
+			throw new CategoryException(NOT_FOUND + catId + PRESENT);
 		}
 		return parser.parse(categoryRepository.findById(catId).orElse(null));
 	}

@@ -22,6 +22,10 @@ import com.cg.ofda.service.ICustomerService;
 @RequestMapping(path="/customer")
 public class CustomerRestControlller {
 	
+	/*
+	 * Customer Service is Autowired 
+     */
+	
 	@Autowired
 	private ICustomerService customerService;
 

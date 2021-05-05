@@ -16,6 +16,7 @@ import com.cg.ofda.model.AddressModel;
  * 
  */
 @Entity
+/*For specifying name of table as "customers"*/
 @Table(name = "customers")
 public class CustomerEntity implements Serializable {
 
@@ -27,30 +28,39 @@ public class CustomerEntity implements Serializable {
 	 */
 
 	@Id
+	/*For creating "cust_id" column*/
 	@Column(name = "cust_id", length = 19)
 	private Long customerId;
 
+	/*For creating "first_name" column*/
 	@Column(name = "first_name", length = 50)
 	private String firstName;
 
+	/*For creating "last_name" column*/
 	@Column(name = "last_name", length = 50)
 	private String lastName;
 
+	/*For creating "gender" column*/
 	@Column(name = "gender", length = 50)
 	private String gender;
 
+	/*For creating "age" column*/
 	@Column(name = "age", length = 50)
 	private String age;
 
+	/*For creating "mobile" column*/
 	@Column(name = "mobile", length = 50)
 	private String mobileNumber;
 
+	/*Here address is embedded from AddressModel*/
 	@Embedded
 	private AddressModel address;
 
+	/*To specify OneToOne relationship*/
 	@OneToOne(mappedBy = "customer")
 	private FoodCartEntity foodCart;
 
+	/*For creating "email" column*/
 	@Column(name = "email", length = 50)
 	private String email;
 

@@ -11,14 +11,20 @@ public class CategoryModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+
+	/*	To validate catId cannot be null but can be empty*/
 	@NotNull(message="category id cannot be null")
 	private Long catId;
 
+	/*	To validate categoryName cannot be null and size>0*/
 	@NotEmpty(message="Category Name cannot be empty")
+	/*	To validate categoryName cannot be null but can be empty*/
 	@NotNull(message="Category Name cannot be omitted")
 	private String categoryName;
 	
+	/*	To validate itemList cannot be null and size>0*/
 	@NotEmpty(message="itemList cannot be empty")
+	/*	To validate itemList cannot be null but can be empty*/
 	@NotNull(message="itemList cannot be omitted")
 	private List<ItemModel> itemList;
 	/*

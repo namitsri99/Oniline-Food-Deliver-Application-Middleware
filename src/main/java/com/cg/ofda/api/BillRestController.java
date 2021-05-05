@@ -22,6 +22,10 @@ import com.cg.ofda.service.IBillService;
 @RequestMapping(path="/bill")
 public class BillRestController {
 	
+	/*
+	 * Bill Service is Autowired 
+     */
+	
 	@Autowired
 	private IBillService billService;
 	

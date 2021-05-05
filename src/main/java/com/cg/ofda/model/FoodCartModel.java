@@ -12,17 +12,24 @@ public class FoodCartModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	
+	/*	To validate cartId cannot be null but can be empty*/
 	@NotNull(message = "Food cart id cannot be null")
 	private Long cartId;
 
+	/*For validation of customer*/
 	@Valid
 	private CustomerModel customer;
 
+	/*	To validate itemList cannot be null and size>0*/
 	@NotEmpty(message = " itemList cannot be empty")
+	/*	To validate itemList cannot be null but can be empty*/
 	@NotNull(message = " itemList cannot be omitted")
 	private List<ItemModel> itemList;
 
+	/*	To validate orderDetails cannot be null and size>0*/
 	@NotEmpty(message = "OrderDetails cannot be empty")
+	/*	To validate orderDetails cannot be null but can be empty*/
 	@NotNull(message = "OrderDetails cannot be omitted")
 	private OrderDetailsModel orderDetails;
 

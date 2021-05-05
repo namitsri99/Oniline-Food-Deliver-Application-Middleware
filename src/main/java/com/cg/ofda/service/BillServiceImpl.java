@@ -16,12 +16,24 @@ import com.cg.ofda.util.EMParserBill;
 
 @Service
 public class BillServiceImpl implements IBillService {
-
+   
+	/*
+	 * Bill Repository is Autowired 
+     */
+	
 	@Autowired
 	private IBillRepository billRepo;
+	
+	/*
+	 * EMParserBill is Autowired 
+     */
 
 	@Autowired
 	private EMParserBill parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public BillServiceImpl() {
 		this.parser = new EMParserBill();

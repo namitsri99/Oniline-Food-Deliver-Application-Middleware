@@ -9,12 +9,15 @@ public class LoginModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	/*For checking the pattern of userid*/
 	@Pattern(regexp = "[a-zA-Z0-9]{6,12}", message = "UserId should be valid")
 	private Long userid;
 
+	/*For checking the pattern of userName*/
 	@Pattern(regexp = "[a-zA-Z0-9]{6,12}", message = "Username should be valid")
 	private String userName;
 
+	/*For checking the pattern of password*/
 	@Pattern(regexp = "[a-zA-Z0-9]{8,14}", message = "Password should be valid")
 	private String password;
 

@@ -23,6 +23,10 @@ import com.cg.ofda.service.ICartService;
 @RequestMapping(path="/cart")
 public class CartRestController {
 	
+	/*
+	 * Cart Service is Autowired 
+     */
+	
 	@Autowired
 	private ICartService cartService;
 	/*

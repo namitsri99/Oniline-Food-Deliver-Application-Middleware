@@ -14,36 +14,50 @@ public class CustomerModel {
 	 * 
 	 */
 	
+	/*	To validate customerId cannot be null but can be empty*/
 	@NotNull(message="customer id cannot be null")
 	private Long customerId;
 	
+	/*	To validate firstName cannot be null and size>0*/
 	@NotEmpty(message="firstName cannot be empty")
+	/*	To validate firstName cannot be null but can be empty*/
 	@NotNull(message="firstName cannot be omitted")
 	private String firstName;
 	
+	/*	To validate lastName cannot be null and size>0*/
 	@NotEmpty(message="lastName cannot be empty")
+	/*	To validate lastName cannot be null but can be empty*/
 	@NotNull(message="lastName cannot be omitted")
 	private String lastName;
 	
+	/*	To validate gender cannot be null and size>0*/
 	@NotEmpty(message="gender cannot be empty")
+	/*	To validate gender cannot be null but can be empty*/
 	@NotNull(message="gender cannot be omitted")
 	private String gender;
 	
+	/*For checking age should be more than 16*/
 	@Min(value=16,message="min age should be 16")
+	/*For checking age should be less than 70*/
 	@Max(value=70,message="max age should be 70")
 	private String age;
 	
+	/*To check minimum size of mobile number*/
 	@Min(value=10, message="mobileNumber cannot be empty and should be of 10 digit")
+	/*To check maximum size of mobile number*/
 	@Max(value=10, message="mobileNumber cannot be empty and should be of 10 digit")
 	private String mobileNumber;
 	
 	@Valid
 	private AddressModel address;
 	
+	/*	To validate foodCart cannot be null and size>0*/
 	@NotEmpty(message="foodCart cannot be empty")
+	/*	To validate foodCart cannot be null but can be empty*/
 	@NotNull(message="foodCart cannot be omitted")
 	private FoodCartModel foodCart;
 	
+	/*For checking pattern of email*/
 	@Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
 	private String email;
 	

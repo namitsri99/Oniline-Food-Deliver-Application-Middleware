@@ -16,6 +16,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+/*To create table "order_datails"*/
 @Table(name = "order_details")
 public class OrderDetailsEntity implements Serializable {
 
@@ -26,19 +27,24 @@ public class OrderDetailsEntity implements Serializable {
 	 * 
 	 */
 	@Id
+	/*To create column order_id*/
 	@Column(name = "order_id")
 	private Long orderId;
-
+	
+	/*To create column order_date*/
 	@Column(name = "order_date")
 	private LocalDateTime orderDate;
 
+	/*Specifying OneToOne relationship*/
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cart_id")
 	private FoodCartEntity cart;
 
+	/*To create column order_status*/
 	@Column(name = "order_status", length = 50)
 	private String orderStatus;
 
+	/*Specifying OneToOne relationship*/
 	@OneToOne(mappedBy = "order",cascade = CascadeType.PERSIST)
 	private BillEntity bill;
 

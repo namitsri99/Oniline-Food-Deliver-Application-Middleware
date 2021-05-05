@@ -23,6 +23,10 @@ import com.cg.ofda.service.ICategoryService;
 @RequestMapping(path="/category")
 public class CategoryRestController {
 	
+	/*
+	 * Category Service is Autowired 
+     */
+	
 	@Autowired
 	private ICategoryService categoryService;
 	

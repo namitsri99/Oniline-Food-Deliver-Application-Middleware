@@ -11,13 +11,24 @@ import com.cg.ofda.util.EMParserLogin;
 
 @Service
 public class LoginServiceImpl implements ILoginService {
+	
+	/*
+	 * Login Repository is Autowired 
+     */
 
 	@Autowired
 	private ILoginRepository loginRepository;
+	
+	/*
+	 * EMParserLogin is Autowired 
+     */
 
 	@Autowired
 	private EMParserLogin parser;
-
+	
+	/*
+	 * Default Constructor
+     */
 
 	public LoginServiceImpl() {
 		this.parser = new EMParserLogin();
@@ -42,6 +53,8 @@ public class LoginServiceImpl implements ILoginService {
 	public String signIn(Long id) throws LoginException {
 
 		LoginEntity logEn = loginRepository.findById(id).orElse(null);
+		if(logEn==null)
+			throw new LoginException("id not found");
 		LoginModel logMod = parser.parse(logEn);
 
 		if (logMod == null)
@@ -55,7 +68,7 @@ public class LoginServiceImpl implements ILoginService {
 		String entityUserName = logEn.getUserName();
 		String entityPassword = logEn.getPassword();
 
-		if (userId == entityUserId && userName.equals(entityUserName) && password.equals(entityPassword))
+		if (userId.equals(entityUserId) && userName.equals(entityUserName) && password.equals(entityPassword))
 			return "Welcome User Login Successfull";
 
 		else

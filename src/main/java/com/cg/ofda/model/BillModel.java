@@ -17,24 +17,27 @@ public class BillModel{
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	/*	To validate billId cannot be null but can be empty*/
 	@NotNull(message="bill id cannot be null")
     private Long billId;
 	
-	
+	/*	To validate order cannot be null and size>0*/
 	@NotEmpty(message="OrderDetails cannot be empty")
+	/*	To validate order cannot be null but can be empty*/
 	@NotNull(message="OrderDetails cannot be omitted")
     private OrderDetailsModel order;
     
-
+	/*	To validate totalItem cannot be null but can be empty*/
 	@NotNull(message=" total Item cannot be null")
     private int totalItem;
     
-
+	/*	To validate totalCost cannot be null but can be empty*/
 	@NotNull(message=" total cost cannot be null")
     private BigDecimal totalCost;
 
-
+	/*To format date/time*/
 	@DateTimeFormat(iso=ISO.DATE)
+	/*To check date is not a future date*/
 	@PastOrPresent(message="disbursement date cannot be future date")
     LocalDateTime billDate;
 

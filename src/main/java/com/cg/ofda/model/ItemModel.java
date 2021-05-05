@@ -14,28 +14,39 @@ public class ItemModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	/*	To validate itemId cannot be null but can be empty*/
 	@NotNull(message = "Item id cannot be null")
 	private Long itemId;
 
+	/*	To validate itemName cannot be null and size>0*/
 	@NotEmpty(message = " item Name cannot be empty")
+	/*	To validate itemName cannot be null but can be empty*/
 	@NotNull(message = " item Name cannot be omitted")
 	private String itemName;
 
+	/*	To validate category cannot be null and size>0*/
 	@NotEmpty(message = " category cannot be empty")
+	/*	To validate category cannot be null but can be empty*/
 	@NotNull(message = " category cannot be omitted")
 	private CategoryModel category;
 
+	/*To check minimum quantity*/
 	@Min(value = 1, message = "min quantity should be 1")
 	private int quantity;
 
+	/*	To validate cost cannot be null but can be empty*/
 	@NotNull(message = " cost cannot be null")
 	private BigDecimal cost;
 
+	/*	To validate restaurants cannot be null and size>0*/
 	@NotEmpty(message = " Restaurants cannot be empty")
+	/*	To validate restaurants cannot be null but can be empty*/
 	@NotNull(message = " Restaurants cannot be omitted")
 	private List<RestaurantModel> restaurants;
 
+	/*	To validate foodCart cannot be null and size>0*/
 	@NotEmpty(message = "foodCart cannot be empty")
+	/*	To validate foodCart cannot be null but can be empty*/
 	@NotNull(message = "foodCart cannot be omitted")
 	private FoodCartModel foodCart;
 

@@ -14,25 +14,35 @@ public class RestaurantModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+	/*	To validate restaurantId cannot be null but can be empty*/
 	@NotNull(message = "restaurant id cannot be null")
 	private Long restaurantId;
 
+	/*	To validate restaurantName cannot be null and size>0*/
 	@NotEmpty(message = "restaurantNamecannot be empty")
+	/*	To validate restaurantName cannot be null but can be empty*/
 	@NotNull(message = "restaurantName cannot be omitted")
 	private String restaurantName;
 
+	/*To validate address*/
 	@Valid
 	private AddressModel address;
 
+	/*	To validate itemList cannot be null and size>0*/
 	@NotEmpty(message = "itemList cannot be empty")
+	/*	To validate itemList cannot be null but can be empty*/
 	@NotNull(message = "itemList cannot be omitted")
 	private List<ItemModel> itemList;
 
+	/*	To validate managerName cannot be null and size>0*/
 	@NotEmpty(message = "Manager Name cannot be empty")
+	/*	To validate managerName cannot be null but can be empty*/
 	@NotNull(message = "Manager Name cannot be omitted")
 	private String managerName;
 
+	/*To check minimum digits of contact number*/
 	@Min(value = 10, message = "contactNumber cannot be empty and should be of 10 digit")
+	/*To check maximum digits of contact number*/
 	@Max(value = 10, message = "contactNumber cannot be empty and should be of 10 digit")
 	private String contactNumber;
 

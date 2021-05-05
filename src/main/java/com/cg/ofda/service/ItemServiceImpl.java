@@ -16,12 +16,27 @@ import com.cg.ofda.util.EMParserItem;
 
 @Service
 public class ItemServiceImpl implements IItemService {
+	
+	public static final String NOT_FOUND = "no item with id #";
+	public static final String PRESENT = " present";
+	
+	/*
+	 * Item Repository is Autowired 
+     */
 
 	@Autowired
 	private IItemRepository itemRepo;
+	
+	/*
+	 * EMParserItem is Autowired 
+     */
 
 	@Autowired
 	private EMParserItem parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public ItemServiceImpl() {
 		this.parser = new EMParserItem();
@@ -59,8 +74,11 @@ public class ItemServiceImpl implements IItemService {
 
 	@Override
 	public ItemModel viewItem(Long id) throws ItemException {
-		ItemEntity item = itemRepo.findById(id).orElse(null);
-		return parser.parse(item);
+		ItemEntity item= itemRepo.findById(id).orElse(null);
+		if(item==null)
+			throw new ItemException(NOT_FOUND + id + PRESENT);
+		else
+			return parser.parse(item);
 	}
 
 	/*
@@ -72,7 +90,7 @@ public class ItemServiceImpl implements IItemService {
 	public ItemModel updateItem(ItemModel item) throws ItemException {
 		ItemEntity oldItem = itemRepo.findById(item.getItemId()).orElse(null);
 		if (oldItem == null) {
-			throw new ItemException("no item with id #" + item.getItemId() + " present");
+			throw new ItemException(NOT_FOUND + item.getItemId() + PRESENT);
 		} else {
 			item = parser.parse(itemRepo.save(parser.parse(item)));
 		}
@@ -89,7 +107,7 @@ public class ItemServiceImpl implements IItemService {
 		ItemEntity oldItem = itemRepo.findById(id).orElse(null);
 		boolean isDeleted = false;
 		if (oldItem == null) {
-			throw new ItemException("no item with id #" + id + " present");
+			throw new ItemException(NOT_FOUND + id + PRESENT);
 		} else {
 			itemRepo.deleteById(id);
 			isDeleted = true;

@@ -16,12 +16,27 @@ import com.cg.ofda.util.EMParserOrderDetails;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
+	
+	public static final String NOT_FOUND = "no order with id #";
+	public static final String PRESENT = " present";
+	
+	/*
+	 * Order Repository is Autowired 
+     */
 
 	@Autowired
 	private IOrderRepository orderRepository;
+	
+	/*
+	 * EMParserOrderDetails is Autowired 
+     */
 
 	@Autowired
 	private EMParserOrderDetails parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public OrderServiceImpl() {
 		this.parser = new EMParserOrderDetails();
@@ -64,7 +79,7 @@ public class OrderServiceImpl implements IOrderService {
 	public OrderDetailsModel updateOrder(OrderDetailsModel order) throws OrderException {
 		OrderDetailsEntity oldOrder = orderRepository.findById(order.getOrderId()).orElse(null);
 		if (oldOrder == null) {
-			throw new OrderException("no order with id #" + order.getOrderId() + " present");
+			throw new OrderException(NOT_FOUND + order.getOrderId() + PRESENT);
 		} else {
 			order = parser.parse(orderRepository.save(parser.parse(order)));
 		}
@@ -81,7 +96,7 @@ public class OrderServiceImpl implements IOrderService {
 		boolean isDeleted = false;
 		OrderDetailsEntity oldOrder = orderRepository.findById(orderId).orElse(null);
 		if (oldOrder == null) {
-			throw new OrderException("no order with id #" + orderId + " present");
+			throw new OrderException(NOT_FOUND + orderId + PRESENT);
 		} else {
 			orderRepository.deleteById(orderId);
 			isDeleted = true;
@@ -97,7 +112,7 @@ public class OrderServiceImpl implements IOrderService {
 	public OrderDetailsModel viewOrder(Long orderId) throws OrderException {
 		OrderDetailsEntity oldOrder = orderRepository.findById(orderId).orElse(null);
 		if (oldOrder == null) {
-			throw new OrderException("no order with id #" + orderId + " present");
+			throw new OrderException(NOT_FOUND + orderId + PRESENT);
 		}
 		return parser.parse(orderRepository.findById(orderId).orElse(null));
 	}

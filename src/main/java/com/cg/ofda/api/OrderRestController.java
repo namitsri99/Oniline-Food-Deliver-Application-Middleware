@@ -21,6 +21,11 @@ import com.cg.ofda.service.IOrderService;
 @RestController
 @RequestMapping("/order")
 public class OrderRestController {
+	
+	/*
+	 * Order Service is Autowired 
+     */
+	
 	@Autowired
 	private IOrderService orderService;
 	

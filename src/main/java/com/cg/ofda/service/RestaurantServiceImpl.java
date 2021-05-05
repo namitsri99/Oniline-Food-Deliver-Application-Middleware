@@ -15,12 +15,27 @@ import com.cg.ofda.util.EMParserRestaurant;
 
 @Service
 public class RestaurantServiceImpl implements IRestaurantService {
+	
+	public static final String NOT_FOUND = "no restaurant with id #";
+	public static final String PRESENT = " present";
+	
+	/*
+	 * Restaurant Repository is Autowired 
+     */
 
 	@Autowired
 	private IRestaurantRepository resRepo;
+	
+	/*
+	 * EMParserRestaurant is Autowired 
+     */
 
 	@Autowired
 	private EMParserRestaurant parser;
+	
+	/*
+	 * Default constructor
+     */
 
 	public RestaurantServiceImpl() {
 		this.parser = new EMParserRestaurant();
@@ -63,7 +78,7 @@ public class RestaurantServiceImpl implements IRestaurantService {
 		boolean isDeleted = false;
 		RestaurantEntity restaurant = resRepo.findById(restaurantId).orElse(null);
 		if (restaurant == null) {
-			throw new RestaurantException("no restaurant with id #" + restaurantId + " present");
+			throw new RestaurantException(NOT_FOUND + restaurantId + PRESENT);
 		} else {
 			resRepo.deleteById(restaurantId);
 			isDeleted = true;
@@ -80,7 +95,7 @@ public class RestaurantServiceImpl implements IRestaurantService {
 	public RestaurantModel updateRestaurant(RestaurantModel res) throws RestaurantException {
 		if (res != null) {
 			if (!resRepo.existsById(res.getRestaurantId())) {
-				throw new RestaurantException("No Such Restaurant Found");
+				throw new RestaurantException(NOT_FOUND + res.getRestaurantId() + PRESENT);
 
 			}
 			res = parser.parse(resRepo.save(parser.parse(res)));
@@ -96,7 +111,7 @@ public class RestaurantServiceImpl implements IRestaurantService {
 	public RestaurantModel viewRestaurant(Long restaurantId) throws RestaurantException {
 		RestaurantEntity restaurant = resRepo.findById(restaurantId).orElse(null);
 		if (restaurant == null) {
-			throw new RestaurantException("no restaurant with id #" + restaurantId + " present");
+			throw new RestaurantException(NOT_FOUND + restaurantId + PRESENT);
 		}
 		return parser.parse(resRepo.findById(restaurantId).orElse(null));
 	}

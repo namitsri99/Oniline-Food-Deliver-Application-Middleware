@@ -14,61 +14,65 @@ import javax.persistence.Table;
 
 /* This is an Entity class*/
 @Entity
-@Table(name="bill")
-public class BillEntity implements Serializable{
-	
+
+/* Here name of the table is set as "bill" */
+@Table(name = "bill")
+public class BillEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	/* All the private members are defined here with suitable datatypes
+	/*
+	 * All the private members are defined here with suitable datatypes
 	 * 
 	 */
-
+	/* For creating bill_id column */
 	@Id
-	@Column(name="bill_id",length=19)
-    private Long billId;
-	
+	@Column(name = "bill_id", length = 19)
+	private Long billId;
+
+	/* To specify OneToOne relationship */
 	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="order_id")
-    private OrderDetailsEntity order;
-    
-	@Column(name="total_item")
-    private Integer totalItem;
-    
-	@Column(name="total_cost")
-    private BigDecimal totalCost;
+	@JoinColumn(name = "order_id")
+	private OrderDetailsEntity order;
 
-	@Column(name="bill_date")
-    LocalDateTime billDate;
+	/* For specifying total items in bill */
+	@Column(name = "total_item")
+	private Integer totalItem;
 
-	
-	
+	/* For specifying total cost */
+	@Column(name = "total_cost")
+	private BigDecimal totalCost;
+
+	/* For specifying bill date */
+	@Column(name = "bill_date")
+	LocalDateTime billDate;
+
 	/*
 	 * A default Constructor with no implementation
-	 * */
+	 */
 	public BillEntity() {
-		//default
+		// default
 	}
-	
-	
+
 	/*
 	 * A Parameterized Constructor for assigning the values to private members
-	 * */
+	 */
 
-	public BillEntity (Long billId,OrderDetailsEntity order, Integer totalItem, BigDecimal totalCost, LocalDateTime billDate) {
+	public BillEntity(Long billId, OrderDetailsEntity order, Integer totalItem, BigDecimal totalCost,
+			LocalDateTime billDate) {
 		super();
-		this.billId=billId;
+		this.billId = billId;
 		this.order = order;
 		this.totalItem = totalItem;
 		this.totalCost = totalCost;
 		this.billDate = billDate;
 	}
 
-	
 	/*
 	 * Corresponding Getters and Setters for private members
 	 * 
 	 */
-	
+
 	public Long getBillId() {
 		return billId;
 	}
@@ -76,7 +80,6 @@ public class BillEntity implements Serializable{
 	public void setBillId(Long billId) {
 		this.billId = billId;
 	}
-
 
 	public OrderDetailsEntity getOrder() {
 		return order;
@@ -110,9 +113,8 @@ public class BillEntity implements Serializable{
 		this.billDate = billDate;
 	}
 
+	/*Generate corresponding hashCode and equals*/
 	
-	
-	/* Corresponding hashcode and equals */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -124,7 +126,6 @@ public class BillEntity implements Serializable{
 		result = prime * result + ((totalItem == null) ? 0 : totalItem.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -162,13 +163,12 @@ public class BillEntity implements Serializable{
 			return false;
 		return true;
 	}
-
 	
-	/* 
-	 *toString() method overridden here
-	 * 
-	 * */
 
+	/*
+	 * toString() method overridden here
+	 * 
+	 */
 
 	@Override
 	public String toString() {
@@ -177,4 +177,5 @@ public class BillEntity implements Serializable{
 	}
 
 	
+
 }

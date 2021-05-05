@@ -23,6 +23,10 @@ import com.cg.ofda.service.IItemService;
 @RequestMapping("/item")
 public class ItemRestController {
 	
+	/*
+	 * Item Service is Autowired 
+     */
+	
 	@Autowired
 	private IItemService itemService;
 	

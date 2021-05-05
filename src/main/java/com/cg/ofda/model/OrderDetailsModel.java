@@ -15,21 +15,32 @@ public class OrderDetailsModel {
 	 * All the private members are validate here with suitable datatypes
 	 * 
 	 */
+
+	/*	To validate orderId cannot be null but can be empty*/
 	@NotNull(message = "Order id cannot be null")
 	private Long orderId;
 
+	/*To format as date/time*/
 	@DateTimeFormat(iso = ISO.DATE)
+	/*To check date is not a future date*/
 	@PastOrPresent(message = "disbursement date cannot be future date")
 	private LocalDateTime orderDate;
 
+	/*	To validate cart cannot be null and size>0*/
 	@NotEmpty(message = "foodCart cannot be empty")
+	/*	To validate cart cannot be null but can be empty*/
 	@NotNull(message = "foodCart cannot be omitted")
 	private FoodCartModel cart;
 
+
+	/*	To validate orderStatus cannot be null but can be empty*/
 	@NotNull(message = "Order Status cannot be null")
 	private String orderStatus;
 
+	/*	To validate bill cannot be null and size>0*/
 	@NotEmpty(message = "bill cannot be empty")
+
+	/*	To validate bill cannot be null but can be empty*/
 	@NotNull(message = "bill cannot be omitted")
 	private BillModel bill;
 

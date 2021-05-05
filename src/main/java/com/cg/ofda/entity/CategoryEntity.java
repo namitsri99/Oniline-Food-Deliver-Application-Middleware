@@ -15,6 +15,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+/*For specifying name of table as "category"*/
 @Table(name="category")
 public class CategoryEntity {
 			/*
@@ -23,12 +24,15 @@ public class CategoryEntity {
 		 */
 	
 		@Id
+		/*For setting column name as cat_id*/
 		@Column(name = "cat_id")
 		private Long catId;
 
+		/*For setting column name as category_name*/
 		@Column(name = "category_name")
 		private String categoryName;
 
+		/*To specify OneToMany relationship*/
 		@OneToMany(mappedBy="category",cascade = CascadeType.ALL)
 		private List<ItemEntity> itemList;
 		

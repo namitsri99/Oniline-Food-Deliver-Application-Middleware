@@ -13,23 +13,23 @@ import com.cg.ofda.repository.IRestaurantRepository;
 @Service
 public class EMParserRestaurant {
 	
+	/*
+	 * Bill Repository is Autowired
+     */
+	
 	@Autowired
 	private IRestaurantRepository billRepo;
+	
+	/*
+	 * EMParserItem is Autowired
+     */
 	
 	@Autowired
 	private EMParserItem itemParser;
 	
-//	
-//	public EMParserRestaurant() {
-//		this.itemParser= new EMParserItem();
-//	}
-	
-	
-//	public EMParserRestaurant(IRestaurantRepository billRepo) {
-//		super();
-//		this.billRepo = billRepo;
-//		this.itemParser= new EMParserItem();
-//	}
+	/*
+	 * Method to parse Entity to Model
+     */
 
 	public RestaurantModel parse(RestaurantEntity source) {
 		return source==null ? null:
@@ -41,6 +41,10 @@ public class EMParserRestaurant {
 					source.getContactNumber());
 					
 	}
+	
+	/*
+	 * Method to parse Model to Entity
+     */
 	
 	public RestaurantEntity parse(RestaurantModel source) {
 		return source==null ? null:

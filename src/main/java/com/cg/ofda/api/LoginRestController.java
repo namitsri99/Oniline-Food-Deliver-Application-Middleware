@@ -15,6 +15,10 @@ import com.cg.ofda.service.ILoginService;
 @RequestMapping(path="/login")
 public class LoginRestController {
 	
+	/*
+	 * Login Service is Autowired 
+     */
+	
 	@Autowired
 	private ILoginService loginService;
 
@@ -24,12 +28,11 @@ public class LoginRestController {
 	 */
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<String> Login(@PathVariable("userId") Long userId) throws LoginException {
+	public ResponseEntity<String> user(@PathVariable("userId") Long userId) throws LoginException {
 		
-		String ValidUser = loginService.signIn(userId);
 		
-		ResponseEntity<String> response= new ResponseEntity<String>(ValidUser,HttpStatus.OK);
+		return new ResponseEntity<>(loginService.signIn(userId),HttpStatus.OK);
 		
-	return response;
+	
 	}
 }

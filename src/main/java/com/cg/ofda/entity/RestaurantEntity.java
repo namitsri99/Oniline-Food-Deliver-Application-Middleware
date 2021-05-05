@@ -19,6 +19,7 @@ import com.cg.ofda.model.AddressModel;
  * 
  */
 @Entity
+/*To create table "restaurants"*/
 @Table(name = "restaurants")
 public class RestaurantEntity implements Serializable {
 
@@ -29,15 +30,19 @@ public class RestaurantEntity implements Serializable {
 	 * 
 	 */
 	@Id
+	/*To create column "restaurant_id"*/
 	@Column(name = "restaurant_id", length = 19)
 	private Long restaurantId;
 
+	/*To create column "restaurant_name"*/
 	@Column(name = "restaurant_name", length = 30)
 	private String restaurantName;
 
+	/*To embed address from AddressModel*/
 	@Embedded
 	private AddressModel address;
 
+	/*To specify ManyToMany relationship*/
 	@ManyToMany
 	@JoinTable(
 			  name = "restaurant_item_list", 
@@ -45,9 +50,11 @@ public class RestaurantEntity implements Serializable {
 			  inverseJoinColumns = @JoinColumn(name = "restaurant_id"))
 	private List<ItemEntity> itemList;
 
+	/*To create column "manager_name"*/
 	@Column(name = "manager_name", length = 30)
 	private String managerName;
-
+ 
+	/*To create column "contact_number"*/
 	@Column(name = "contact_number", length = 50)
 	private String contactNumber;
 
